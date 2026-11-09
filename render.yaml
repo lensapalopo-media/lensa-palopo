@@ -1,0 +1,20 @@
+services:
+  # Opsi 1: Static Site (Gratis, Cepat, Tanpa Sleep/Tidur)
+  - type: web
+    name: lensa-palopo
+    env: static
+    buildCommand: ""
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /admin
+        destination: /admin.html
+      - type: rewrite
+        source: /dashboard
+        destination: /admin.html
+      - type: rewrite
+        source: /admin/
+        destination: /admin.html
+      - type: rewrite
+        source: /*
+        destination: /index.html

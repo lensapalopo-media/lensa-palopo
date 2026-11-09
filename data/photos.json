@@ -1,0 +1,245 @@
+{
+  "settings": {
+    "brandName": "LENSA PALOPO",
+    "brandTagline": "Profil Kota Palopo & Dokumentasi Visual Luwu Raya",
+    "logoUrl": "assets/logo-lensa-palopo.png",
+    "topbarText": "Portal Resmi Profil Kota Palopo & Dokumentasi Visual Lensa Palopo",
+    "tickerText": "📸 Selamat datang di Portal Resmi Profil Kota Palopo persembahan Lensa Palopo (@lensa_palopo) | 🏛️ Jelajahi data lengkap 9 Kecamatan, 48 Kelurahan, Sejarah Kedatuan Luwu, Wisata Bahari & Kuliner Khas Palopo | 🎬 Tonton seri video dokumenter & baca liputan berita terbaru langsung dari lapangan | ☁️ Tersinkronisasi langsung dengan Dashboard Admin & Cloud Supabase",
+    "heroBadge": "Jazirah Luwu Raya • Sulawesi Selatan",
+    "heroPrefix": "Mengenal",
+    "heroHighlight": "Kota Palopo",
+    "heroSuffix": "Lewat Lensa & Cerita",
+    "heroBg": "",
+    "heroDesc": "Kota maritim di kawasan pesisir Teluk Bone yang memadukan keindahan alam tropis, keagungan sejarah Kedatuan Luwu, dan denyut perdagangan modern Luwu Raya.",
+    "stat1Val": "Teluk Bone",
+    "stat1Lbl": "Pesisir & Bahari",
+    "stat2Val": "1604 M",
+    "stat2Lbl": "Masjid Tua Jami'",
+    "stat3Val": "Luwu Raya",
+    "stat3Lbl": "Pusat Jasa & Edukasi",
+    "stat4Val": "100% Otentik",
+    "stat4Lbl": "Karya @lensa_palopo",
+    "creatorHandle": "@lensa_palopo",
+    "creatorIgUrl": "https://instagram.com/lensa_palopo",
+    "creatorBio": "\"Website ini didedikasikan oleh Lensa Palopo (@lensa_palopo) sebagai portal profil Kota Palopo sekaligus ruang portofolio dokumentasi visual independen. Setiap berita, foto, dan video dokumenter merupakan hasil liputan dan tangkapan mata di tanah Luwu, dipersembahkan bagi masyarakat Palopo dan penikmat keindahan nusantara.\"",
+    "creatorGear": "Mirrorless Full-frame, Lensa 24-70mm f/2.8, 35mm Prime, Drone 4K.",
+    "creatorPrinciple": "Otentik, menghargai kearifan lokal, dan bercerita lewat cahaya alami.",
+    "sections": {
+      "ticker": true,
+      "stories": true,
+      "galeri": true,
+      "wisata": true,
+      "budaya": true,
+      "cerita": true,
+      "dokumenter": true,
+      "kecamatan": true,
+      "profil": true
+    }
+  },
+  "photos": [
+    {
+      "id": "lp-default-1",
+      "title": "Keemasan Fajar di Dermaga Tanjung Ringgit",
+      "category": "landskap",
+      "location": "Tanjung Ringgit, Kec. Wara Timur",
+      "date": "2026-05-10",
+      "exif": "35mm • f/8.0 • 1/125s • ISO 100",
+      "description": "Cahaya pagi pertama menyinari deretan perahu nelayan tradisional di pesisir Teluk Bone, Kota Palopo.",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+      "visible": true
+    },
+    {
+      "id": "lp-default-2",
+      "title": "Arsitektur Batu Karang Masjid Jami Tua Palopo",
+      "category": "budaya",
+      "location": "Kel. Batupasi, Kec. Wara Utara",
+      "date": "2026-05-08",
+      "exif": "24mm • f/5.6 • 1/250s • ISO 200",
+      "description": "Warisan bersejarah tahun 1604 M peninggalan masa Kedatuan Luwu yang berdiri kokoh hingga kini.",
+      "img": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=1200&q=80",
+      "visible": true
+    },
+    {
+      "id": "lp-default-3",
+      "title": "Kabut Pagi di Puncak Bukit Kambo Highland",
+      "category": "drone",
+      "location": "Kec. Mungkajang, Kota Palopo",
+      "date": "2026-05-05",
+      "exif": "Drone 24mm • f/2.8 • 1/500s • ISO 100",
+      "description": "Lanskap hijau perbukitan Kambo dengan latar siluet Kota Palopo dan bentangan laut Teluk Bone dari ketinggian.",
+      "img": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+      "visible": true
+    },
+    {
+      "id": "lp-default-4",
+      "title": "Segarnya Air Terjun Latuppa di Hutan Tropis",
+      "category": "landskap",
+      "location": "Latuppa, Kec. Mungkajang",
+      "date": "2026-05-03",
+      "exif": "16mm • f/11 • 1/4s • ISO 64",
+      "description": "Aliran sungai jernih dari pegunungan Latuppa yang menjadi oase wisata keluarga favorit warga Kota Palopo.",
+      "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80",
+      "visible": true
+    }
+  ],
+  "articles": [
+    {
+      "id": "art-lp-1",
+      "title": "Menunggu Matahari Terbit Bersama Nelayan Tanjung Ringgit",
+      "tag": "Jurnal Bahari",
+      "date": "14 Mei 2026",
+      "readTime": "4 Menit Baca",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+      "preview": "Pukul 04.30 WITA, deru mesin perahu ketinting mulai memecah keheningan dermaga. Sebuah catatan visual tentang harapan yang berlayar setiap subuh.",
+      "content": "<p>Subuh di pesisir timur Kota Palopo selalu memiliki magnet tersendiri bagi lensa kamera. Saat sebagian besar warga kota masih terlelap, Pelabuhan Tanjung Ringgit sudah berdenyut oleh langkah kaki para nelayan dan pedagang ikan.</p><p class=\"mt-3\">Dengan berbekal kamera dan lensa 35mm, saya mengikuti Pak Rahman (54), seorang nelayan tradisional yang telah mengarungi Teluk Bone selama lebih dari tiga dekade. Ketika semburat jingga pertama muncul di cakrawala timur, permukaan laut berubah menjadi cermin emas raksasa.</p><p class=\"mt-3\">Melalui dokumentasi <strong>@lensa_palopo</strong>, momen-momen sederhana namun sarat makna inilah yang ingin terus kami abadikan—sebagai pengingat bahwa identitas maritim Palopo hidup dalam keringat dan senyum warganya.</p>"
+    },
+    {
+      "id": "art-lp-2",
+      "title": "Jejak Pahatan Batu 1604: Membaca Simbol Masjid Tua Palopo",
+      "tag": "Sejarah & Budaya",
+      "date": "02 Mei 2026",
+      "readTime": "5 Menit Baca",
+      "img": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=80",
+      "preview": "Menelusuri detail tekstur batu cadas dan ukiran sulur pada dinding Masjid Jami Tua Palopo yang bertahan lebih dari empat abad.",
+      "content": "<p>Memotret arsitektur bersejarah menuntut kesabaran menunggu jatuhnya sudut cahaya yang tepat. Pada pukul delapan pagi, sinar matahari miring menembus celah pepohonan di sekitar Masjid Tua Palopo, menonjolkan tekstur batu cadas berusia lebih dari 400 tahun.</p><p class=\"mt-3\">Tidak ada semen modern pada sambungan batu-batu ini. Para leluhur Tana Luwu memadukan kearifan lokal Bugis-Luwu, pengaruh Hindu-Buddha pada struktur bertingkat tiga, serta nilai kosmologi Islam yang dibawa oleh Datuk Sulaiman.</p>"
+    },
+    {
+      "id": "art-lp-3",
+      "title": "Geliat Ekonomi Kreatif & Wajah Baru Ruang Publik Kota Palopo",
+      "tag": "Berita Kota",
+      "date": "18 Mei 2026",
+      "readTime": "3 Menit Baca",
+      "img": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80",
+      "preview": "Liputan perkembangan pusat kuliner malam, ruang terbuka hijau, dan antusiasme generasi muda Palopo dalam memajukan pariwisata daerah.",
+      "content": "<p>Sebagai kota jasa, pendidikan, dan perdagangan utama di kawasan Luwu Raya, Kota Palopo terus berbenah mempercantik ruang-ruang publiknya. Mulai dari kawasan Lapangan Pancasila, pelataran Istana Kedatuan Luwu, hingga deretan kafe kreatif di sepanjang jalan protokol maupun perbukitan Kambo.</p><p class=\"mt-3\">Tim <strong>Lensa Palopo</strong> merangkum bagaimana kolaborasi komunitas pemuda, pelaku UMKM kuliner tradisional seperti Kapurung dan Dange, serta kreator visual lokal berhasil mengangkat daya tarik wisata Kota Idaman ke panggung nasional.</p>"
+    }
+  ],
+  "videos": [
+    {
+      "id": "doc-featured",
+      "title": "Nafas Bahari di Ujung Fajar Teluk Bone",
+      "duration": "08:45",
+      "location": "Tanjung Ringgit & Teluk Bone",
+      "videoUrl": "",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+      "synopsis": "Merekam ketabahan para nelayan bagan dan perahu tradisional di Pelabuhan Tanjung Ringgit. Mulai dari menatap ufuk timur, menarik jala ikan teri, hingga tawar-menawar hangat di pelelangan ikan saat matahari mulai terbit.",
+      "isFeatured": true
+    },
+    {
+      "id": "doc-1",
+      "title": "Penjaga Batu Tua: Kisah Merawat Masjid 1604",
+      "duration": "06:20",
+      "location": "Kec. Wara Utara, Palopo",
+      "videoUrl": "",
+      "img": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=80",
+      "synopsis": "Wawancara eksklusif bersama para pengurus dan juru pelihara Masjid Jami Tua Palopo tentang bagaimana masyarakat sekitar menjaga kesucian dan keaslian arsitektur abad ke-17 ini.",
+      "isFeatured": false
+    },
+    {
+      "id": "doc-2",
+      "title": "Simfoni Air & Hutan: Ekspedisi Hulu Latuppa",
+      "duration": "05:15",
+      "location": "Kawasan Pegunungan Latuppa",
+      "videoUrl": "",
+      "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=900&q=80",
+      "synopsis": "Perjalanan menyusuri sungai berbatu dan air terjun bertingkat di Latuppa, mendokumentasikan kekayaan flora tropis dan sumber mata air bersih kebanggaan warga Kota Palopo.",
+      "isFeatured": false
+    },
+    {
+      "id": "doc-3",
+      "title": "Dapur Tana Luwu: Filosofi Semangkuk Kapurung",
+      "duration": "07:10",
+      "location": "Sentra Kuliner Palopo",
+      "videoUrl": "",
+      "img": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80",
+      "synopsis": "Mengikuti proses pengolahan sagu murni sejak dipanen, dituang air mendidih, diputar menggunakan dua bilah bambu (dui), hingga disajikan bersama kuah ikan segar dan sayuran lokal.",
+      "isFeatured": false
+    }
+  ],
+  "tourism": [
+    {
+      "id": "tour-1",
+      "name": "Pantai Labombo",
+      "category": "bahari",
+      "distance": "10 Menit dari Pusat Kota",
+      "bestTime": "05.30 - 09.00 WITA",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Pantai berpasir landai dengan deretan gazebo kayu, pohon kelapa, dan pemandangan matahari terbit terbaik menghadap Teluk Bone."
+    },
+    {
+      "id": "tour-2",
+      "name": "Air Terjun Latuppa",
+      "category": "alam",
+      "distance": "20 Menit dari Pusat Kota",
+      "bestTime": "08.00 - 15.00 WITA",
+      "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Kawasan wisata sungai dan air terjun alami di kaki pegunungan dengan air super jernih, dikelilingi kebun durian dan hutan tropis."
+    },
+    {
+      "id": "tour-3",
+      "name": "Puncak Kambo Highland",
+      "category": "alam",
+      "distance": "25 Menit dari Pusat Kota",
+      "bestTime": "06.00 - 17.30 WITA",
+      "img": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Kawasan dataran tinggi sejuk dengan panorama spektakuler lanskap Kota Palopo dan garis pantai Teluk Bone dari ketinggian."
+    },
+    {
+      "id": "tour-4",
+      "name": "Dermaga & Kuliner Tanjung Ringgit",
+      "category": "bahari",
+      "distance": "8 Menit dari Pusat Kota",
+      "bestTime": "16.00 - 22.00 WITA",
+      "img": "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Spot favorit menikmati angin laut sore, aktivitas perahu nelayan, dan pusat kuliner sari laut bakar segar di malam hari."
+    },
+    {
+      "id": "tour-5",
+      "name": "Pulau Libukang",
+      "category": "bahari",
+      "distance": "15 Menit via Perahu",
+      "bestTime": "07.00 - 16.00 WITA",
+      "img": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Pulau karang eksotis di depan perairan Pantai Labombo yang cocok untuk penyeberangan singkat dan fotografi lanskap laut."
+    },
+    {
+      "id": "tour-6",
+      "name": "Taman Baca & Lapangan Pancasila",
+      "category": "keluarga",
+      "distance": "0 Km (Jantung Kota)",
+      "bestTime": "15.30 - 21.00 WITA",
+      "img": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&q=80",
+      "highlight": "Alun-alun ruang terbuka hijau pusat interaksi warga, olahraga sore, dan wisata kuliner jajanan khas Palopo."
+    }
+  ],
+  "stories": [
+    {
+      "id": "st-1",
+      "title": "Fajar Labombo",
+      "time": "2 jam lalu",
+      "caption": "Semburat emas pertama di ufuk Teluk Bone pagi ini. Air sedang surut, memantulkan langit jingga dengan sempurna. 📍 Pantai Labombo, Palopo.",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "st-2",
+      "title": "Masjid Tua",
+      "time": "5 jam lalu",
+      "caption": "Menyusuri tekstur dinding batu cadas Masjid Jami Tua Palopo (1604 M). Warisan agung Kedatuan Luwu yang tak lekang oleh waktu.",
+      "img": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "st-3",
+      "title": "Kabut Kambo",
+      "time": "8 jam lalu",
+      "caption": "Suhu 20°C di ketinggian Kambo Highland. Kota Palopo terlihat bagai permadani di tepi teluk dari atas sini.",
+      "img": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "st-4",
+      "title": "Segarnya Latuppa",
+      "time": "12 jam lalu",
+      "caption": "Suara gemericik Air Terjun Latuppa berpadu dengan rimbunnya hutan tropis Mungkajang.",
+      "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80"
+    }
+  ]
+}
