@@ -2,9 +2,8 @@
   "name": "lensa-palopo",
   "version": "1.0.0",
   "private": true,
-  "description": "Portal Resmi Lensa Palopo & Dashboard CMS",
+  "description": "Portal Lensa Palopo & Dashboard CMS",
   "scripts": {
     "start": "node server.js"
   }
 }
-

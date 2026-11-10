@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+  <title>Admin Lensa Palopo</title>
+  <link rel="icon" type="image/png" href="assets/logo-lensa-palopo.png">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap"
+    rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            navy: {
+              950: '#061320',
+              900: '#0A2540',
+              850: '#0E3357',
+              800: '#103B68',
+              700: '#1A4D84',
+            },
+            gold: {
+              DEFAULT: '#D4AF37',
+              light: '#F5E7B2',
+              dark: '#997300',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #061320;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1A4D84;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+
+    .nav-btn.active {
+      background: rgba(212, 175, 55, 0.16);
+      color: #D4AF37;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-navy-950 text-slate-100 font-sans antialiased selection:bg-gold selection:text-navy-950 min-h-screen flex flex-col">
+
+  <!-- ======================================================== -->
+  <!-- LOGIN OVERLAY -->
+  <!-- ======================================================== -->
+  <div id="auth-overlay" class="fixed inset-0 z-50 bg-navy-950 flex items-center justify-center p-4">
+    <div
+      class="max-w-md w-full bg-navy-900 border border-navy-800 rounded-2xl shadow-2xl p-6 sm:p-8 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex items-center gap-3.5 mb-5">
+        <div
+          class="w-14 h-14 rounded-2xl bg-white p-1 shadow-lg flex items-center justify-center border-2 border-gold shrink-0">
+          <img src="assets/logo-lensa-palopo.png" alt="Logo Lensa Palopo" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <span
+            class="text-[10px] font-bold uppercase tracking-widest text-gold bg-gold/10 px-2 py-0.5 rounded border border-gold/30">Full
+            Control CMS</span>
+          <h1 class="text-xl font-black font-serif tracking-tight text-white mt-0.5">LENSA PALOPO</h1>
+          <p class="text-xs text-slate-400">Dashboard Admin & Pengelola Konten Kota Palopo</p>
+        </div>
+      </div>
+
+      <h2 id="auth-title" class="text-base font-bold text-white mb-1">Masuk ke Panel Kontrol</h2>
+      <p id="auth-subtitle" class="text-xs text-slate-400 mb-4">Akses terbatas khusus administrator Lensa Palopo.
+        Silakan masukkan kredensial akun Anda.</p>
+
+      <form id="auth-form" class="space-y-3.5">
+        <div>
+          <label for="auth-username"
+            class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Username</label>
+          <input type="text" id="auth-username" required placeholder="Masukkan username admin..."
+            autocomplete="username"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+        </div>
+        <div>
+          <label for="auth-password"
+            class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Password</label>
+          <input type="password" id="auth-password" required placeholder="Masukkan password admin..."
+            autocomplete="current-password"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+        </div>
+        <div id="auth-confirm-group" class="hidden">
+          <label for="auth-confirm"
+            class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Konfirmasi Password</label>
+          <input type="password" id="auth-confirm" placeholder="Ulangi password..." autocomplete="new-password"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold transition-colors">
+        </div>
+        <p id="auth-error" class="hidden text-xs text-rose-400 font-medium"></p>
+
+        <button type="submit" id="auth-submit-btn"
+          class="w-full py-3 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Masuk ke Dashboard Admin</span>
+        </button>
+      </form>
+
+      <div class="mt-5 pt-4 border-t border-navy-800 flex items-center justify-between text-xs text-slate-400">
+        <a href="index.html" class="hover:text-gold flex items-center gap-1 transition-colors">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Kembali ke Beranda Publik
+        </a>
+        <span>Vercel & Supabase Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MAIN ADMIN INTERFACE -->
+  <!-- ======================================================== -->
+  <div id="admin-app" class="hidden flex-1 flex flex-col lg:flex-row min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside
+      class="w-full lg:w-64 bg-navy-900 border-b lg:border-b-0 lg:border-r border-navy-800 shrink-0 flex flex-col justify-between">
+      <div>
+        <!-- Brand Header with Mobile Hamburger -->
+        <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div
+              class="w-10 h-10 rounded-xl bg-white p-0.5 shadow flex items-center justify-center border border-gold shrink-0">
+              <img src="assets/logo-lensa-palopo.png" alt="Logo Lensa Palopo" class="w-full h-full object-contain">
+            </div>
+            <div>
+              <span class="text-sm font-black tracking-tight text-white font-serif block">LENSA PALOPO</span>
+              <span class="text-[10px] text-gold font-semibold uppercase tracking-wider">Full Control CMS</span>
+            </div>
+          </a>
+          <!-- Mobile Toggle Button -->
+          <button id="admin-sidebar-toggle-btn" type="button" onclick="toggleAdminMobileNav()"
+            class="lg:hidden p-2 rounded-xl bg-navy-850 hover:bg-navy-800 text-slate-300 hover:text-white border border-navy-700 transition-colors"
+            title="Buka / Tutup Menu Admin">
+            <i data-lucide="menu" id="admin-mobile-icon" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Collapsible Mobile Navigation Wrapper -->
+        <div id="admin-mobile-nav-panel" class="hidden lg:block">
+          <!-- Navigation Menu -->
+          <nav class="p-3 space-y-1 text-xs sm:text-sm">
+            <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Menu Utama</div>
+            <button onclick="switchView('dashboard')" id="nav-dashboard"
+              class="nav-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+              <span>Ringkasan & Status</span>
+            </button>
+            <button onclick="switchView('appearance')" id="nav-appearance"
+              class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="palette" class="w-4 h-4 text-amber-400"></i>
+              <span>Tampilan, Hero & Profil</span>
+            </button>
+
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Manajemen Konten
+            </div>
+            <button onclick="switchView('photos')" id="nav-photos"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="images" class="w-4 h-4 text-sky-400"></i><span>Galeri
+                  Foto</span></span>
+              <span id="badge-count-photos"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('articles')" id="nav-articles"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="newspaper"
+                  class="w-4 h-4 text-purple-400"></i><span>Berita & Cerita</span></span>
+              <span id="badge-count-articles"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('videos')" id="nav-videos"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="film" class="w-4 h-4 text-rose-400"></i><span>Video &
+                  Dokumenter</span></span>
+              <span id="badge-count-videos"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('tourism')" id="nav-tourism"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="compass"
+                  class="w-4 h-4 text-emerald-400"></i><span>Wisata & Kuliner</span></span>
+              <span id="badge-count-tourism"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('stories')" id="nav-stories"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-gold"></i><span>Sorotan
+                  Stories</span></span>
+              <span id="badge-count-stories"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Cloud & Hosting
+            </div>
+            <button onclick="switchView('settings')" id="nav-settings"
+              class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="cloud" class="w-4 h-4 text-emerald-400"></i>
+              <span>Supabase & Vercel</span>
+            </button>
+          </nav>
+
+          <!-- Bottom Actions inside collapsible on mobile -->
+          <div class="p-3 border-t border-navy-800 space-y-2">
+            <a href="index.html" target="_blank"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 text-xs font-bold transition-colors">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Buka Dashboard Klien</span>
+            </a>
+            <button onclick="logoutAdmin()"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold transition-colors">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              <span>Keluar Sesi</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- TOP HEADER -->
+      <header
+        class="bg-navy-900/90 backdrop-blur border-b border-navy-800 px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-30">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 id="page-heading" class="text-lg font-bold text-white">Ringkasan Dashboard</h2>
+            <span id="db-mode-badge"
+              class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> Live Browser Sync
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Semua perubahan otomatis tersinkron ke Dashboard Klien & Cloud Supabase</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="syncAllToCloudNow()"
+            class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-bold text-xs transition-all flex items-center gap-1.5 shadow">
+            <i data-lucide="cloud-upload" class="w-4 h-4"></i>
+            <span>Simpan & Sinkronkan Semua</span>
+          </button>
+          <button onclick="exportPhotosJson()"
+            class="px-3.5 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-gold border border-gold/30 font-bold text-xs transition-all flex items-center gap-1.5">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Unduh photos.json (Vercel)</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- ================================================== -->
+        <!-- VIEW 1: DASHBOARD RINGKASAN -->
+        <!-- ================================================== -->
+        <section id="view-dashboard" class="space-y-6">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div onclick="switchView('photos')"
+              class="cursor-pointer bg-navy-900 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 rounded-2xl p-4 transition-all">
+              <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Foto Galeri</span>
+                <i data-lucide="images" class="w-4 h-4 text-sky-400"></i>
+              </div>
+              <div id="stat-total" class="text-2xl font-black text-white">0</div>
+              <div class="text-[11px] text-emerald-400 mt-1"><span id="stat-visible">0</span> tampil • <span
+                  id="stat-hidden">0</span> arsip</div>
+            </div>
+
+            <div onclick="switchView('articles')"
+              class="cursor-pointer bg-navy-900 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 rounded-2xl p-4 transition-all">
+              <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Berita & Cerita</span>
+                <i data-lucide="newspaper" class="w-4 h-4 text-purple-400"></i>
+              </div>
+              <div id="stat-articles" class="text-2xl font-black text-white">0</div>
+              <div class="text-[11px] text-purple-300 mt-1">Artikel & Liputan</div>
+            </div>
+
+            <div onclick="switchView('videos')"
+              class="cursor-pointer bg-navy-900 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 rounded-2xl p-4 transition-all">
+              <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Video Dokumenter</span>
+                <i data-lucide="film" class="w-4 h-4 text-rose-400"></i>
+              </div>
+              <div id="stat-videos" class="text-2xl font-black text-white">0</div>
+              <div class="text-[11px] text-rose-300 mt-1">YouTube / Google Drive</div>
+            </div>
+
+            <div onclick="switchView('tourism')"
+              class="cursor-pointer bg-navy-900 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 rounded-2xl p-4 transition-all">
+              <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Destinasi Wisata</span>
+                <i data-lucide="compass" class="w-4 h-4 text-emerald-400"></i>
+              </div>
+              <div id="stat-tourism" class="text-2xl font-black text-white">0</div>
+              <div class="text-[11px] text-emerald-300 mt-1">Bahari, Alam & Keluarga</div>
+            </div>
+
+            <div onclick="switchView('stories')"
+              class="cursor-pointer bg-navy-900 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 rounded-2xl p-4 transition-all col-span-2 sm:col-span-1">
+              <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Sorotan Stories</span>
+                <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+              </div>
+              <div id="stat-stories" class="text-2xl font-black text-gold">0</div>
+              <div class="text-[11px] text-slate-400 mt-1">Stories Terkini</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Grid -->
+          <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5">
+            <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4 text-gold"></i> Pintasan Kontrol Cepat Lensa Palopo
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+              <button onclick="switchView('appearance')"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-amber-500/15 text-amber-400"><i data-lucide="palette" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="font-bold text-white block">Edit Tampilan, Hero & Saklar Bagian</span>
+                  <span class="text-slate-400 text-[11px]">Ubah judul, logo, teks berjalan, statistik, dan
+                    sembunyikan/tampilkan bagian</span>
+                </div>
+              </button>
+
+              <button onclick="switchView('photos'); openPhotoModal();"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-sky-500/15 text-sky-400"><i data-lucide="image-plus" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="font-bold text-white block">Unggah Foto dari Perangkat</span>
+                  <span class="text-slate-400 text-[11px]">Pilih foto dari Laptop/HP, otomatis diunggah ke Supabase
+                    Storage</span>
+                </div>
+              </button>
+
+              <button onclick="switchView('articles'); openArticleEditorModal();"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-purple-500/15 text-purple-400"><i data-lucide="file-plus"
+                    class="w-5 h-5"></i></div>
+                <div>
+                  <span class="font-bold text-white block">Tulis Berita & Cerita Baru</span>
+                  <span class="text-slate-400 text-[11px]">Publikasikan liputan Kota Palopo atau jurnal cerita</span>
+                </div>
+              </button>
+
+              <button onclick="switchView('videos'); openVideoEditorModal();"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-rose-500/15 text-rose-400"><i data-lucide="video" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="font-bold text-white block">Tambah Video Dokumenter</span>
+                  <span class="text-slate-400 text-[11px]">Sematkan video YouTube, Google Drive Video, atau MP4</span>
+                </div>
+              </button>
+
+              <button onclick="switchView('tourism'); openTourismEditorModal();"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-emerald-500/15 text-emerald-400"><i data-lucide="map-pin"
+                    class="w-5 h-5"></i></div>
+                <div>
+                  <span class="font-bold text-white block">Tambah Destinasi Wisata</span>
+                  <span class="text-slate-400 text-[11px]">Kelola daftar destinasi wisata bahari, alam & keluarga</span>
+                </div>
+              </button>
+
+              <button onclick="switchView('settings')"
+                class="p-3.5 rounded-xl bg-navy-950 hover:bg-navy-850 border border-navy-800 hover:border-gold/40 text-left flex items-start gap-3 transition-all">
+                <div class="p-2 rounded-lg bg-gold/15 text-gold"><i data-lucide="database" class="w-5 h-5"></i></div>
+                <div>
+                  <span class="font-bold text-white block">Koneksi Supabase & Vercel</span>
+                  <span class="text-slate-400 text-[11px]">Atur sinkronisasi database cloud & file deploy Vercel</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 2: TAMPILAN, HERO, PROFIL & SAKLAR BAGIAN -->
+        <!-- ================================================== -->
+        <section id="view-appearance" class="hidden space-y-6">
+          <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-navy-800">
+              <div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                  <i data-lucide="toggle-right" class="w-5 h-5 text-gold"></i> Kontrol Visibilitas Bagian Website
+                  (Tampilkan / Sembunyikan)
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">Matikan atau hidupkan bagian tertentu di halaman depan Klien
+                  secara instan.</p>
+              </div>
+              <button type="button" onclick="saveSiteSettingsForm()"
+                class="px-4 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-bold text-xs flex items-center gap-1.5 shadow">
+                <i data-lucide="save" class="w-4 h-4"></i> Simpan Pengaturan Tampilan
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Teks Berjalan (Info Ticker)</span>
+                <input type="checkbox" id="sec-toggle-ticker" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Sorotan Stories Terkini</span>
+                <input type="checkbox" id="sec-toggle-stories" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Galeri Foto Lensa Palopo</span>
+                <input type="checkbox" id="sec-toggle-galeri" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Destinasi Wisata Unggulan</span>
+                <input type="checkbox" id="sec-toggle-wisata" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Warisan Sejarah & Budaya</span>
+                <input type="checkbox" id="sec-toggle-budaya" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Berita & Cerita Lensa Palopo</span>
+                <input type="checkbox" id="sec-toggle-cerita" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Seri Video Dokumenter</span>
+                <input type="checkbox" id="sec-toggle-dokumenter" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Data 9 Kecamatan & Statistik</span>
+                <input type="checkbox" id="sec-toggle-kecamatan" checked class="w-4 h-4 accent-gold">
+              </label>
+              <label
+                class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
+                <span class="font-semibold text-slate-200">Profil Kota & Kreator</span>
+                <input type="checkbox" id="sec-toggle-profil" checked class="w-4 h-4 accent-gold">
+              </label>
+            </div>
+          </div>
+
+          <!-- Form Identitas, Hero & Profil -->
+          <form id="site-settings-form" onsubmit="event.preventDefault(); saveSiteSettingsForm();" class="space-y-6">
+            <!-- Identitas Brand & Logo -->
+            <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6 space-y-4">
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="award" class="w-5 h-5 text-gold"></i> Identitas Pemilik Website & Pengumuman Atas
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Nama Brand Utama</label>
+                  <input type="text" id="cfg-brand-name"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Tagline Navbar</label>
+                  <input type="text" id="cfg-brand-tagline"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Logo Website (Unggah File dari
+                    Perangkat)</label>
+                  <input type="hidden" id="cfg-logo-url" value="assets/logo-lensa-palopo.png">
+                  <div class="flex items-center gap-3">
+                    <img id="cfg-logo-preview" src="assets/logo-lensa-palopo.png" alt="Logo Preview"
+                      class="w-11 h-11 rounded-xl bg-white p-1 object-contain border border-navy-700 shrink-0">
+                    <input type="file" id="cfg-logo-file" accept="image/*"
+                      onchange="handleFilePreview(this, 'cfg-logo-preview')"
+                      class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-slate-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+                  </div>
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Teks Pengumuman Baris Atas (Topbar)</label>
+                  <input type="text" id="cfg-topbar-text"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block font-semibold text-slate-300 mb-1">Teks Berjalan / Live News Ticker (Pisahkan
+                    setiap info dengan tanda <code class="text-gold">|</code>)</label>
+                  <textarea id="cfg-ticker-text" rows="2"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bagian Hero Utama -->
+            <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6 space-y-4">
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-5 h-5 text-gold"></i> Tampilan Hero Utama (Banner Depan)
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Teks Badge Atas Hero</label>
+                  <input type="text" id="cfg-hero-badge"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Judul Awal</label>
+                  <input type="text" id="cfg-hero-prefix"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Judul Sorotan Emas (Highlight)</label>
+                  <input type="text" id="cfg-hero-highlight"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-gold font-bold focus:border-gold focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block font-semibold text-slate-300 mb-1">Judul Lanjutan (Suffix)</label>
+                  <input type="text" id="cfg-hero-suffix"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Gambar Background Hero (Unggah dari Perangkat -
+                    Opsional)</label>
+                  <input type="hidden" id="cfg-hero-bg" value="">
+                  <div class="flex items-center gap-3">
+                    <img id="cfg-hero-bg-preview" src="assets/logo-lensa-palopo.png" alt="Hero BG Preview"
+                      class="hidden w-14 h-10 rounded-lg object-cover border border-navy-700 shrink-0">
+                    <input type="file" id="cfg-hero-bg-file" accept="image/*"
+                      onchange="handleFilePreview(this, 'cfg-hero-bg-preview')"
+                      class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-slate-300 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+                  </div>
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block font-semibold text-slate-300 mb-1">Deskripsi Paragraf Hero</label>
+                  <textarea id="cfg-hero-desc" rows="2"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none"></textarea>
+                </div>
+              </div>
+
+              <!-- 4 Statistik Hero -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
+                <div class="p-3 rounded-xl bg-navy-950 border border-navy-800 space-y-1.5">
+                  <span class="text-[10px] text-gold font-bold uppercase">Statistik Hero 1</span>
+                  <input type="text" id="cfg-stat1-val" placeholder="Nilai"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1.5 text-white font-bold">
+                  <input type="text" id="cfg-stat1-lbl" placeholder="Label"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1 text-slate-300">
+                </div>
+                <div class="p-3 rounded-xl bg-navy-950 border border-navy-800 space-y-1.5">
+                  <span class="text-[10px] text-gold font-bold uppercase">Statistik Hero 2</span>
+                  <input type="text" id="cfg-stat2-val" placeholder="Nilai"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1.5 text-white font-bold">
+                  <input type="text" id="cfg-stat2-lbl" placeholder="Label"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1 text-slate-300">
+                </div>
+                <div class="p-3 rounded-xl bg-navy-950 border border-navy-800 space-y-1.5">
+                  <span class="text-[10px] text-gold font-bold uppercase">Statistik Hero 3</span>
+                  <input type="text" id="cfg-stat3-val" placeholder="Nilai"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1.5 text-white font-bold">
+                  <input type="text" id="cfg-stat3-lbl" placeholder="Label"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1 text-slate-300">
+                </div>
+                <div class="p-3 rounded-xl bg-navy-950 border border-navy-800 space-y-1.5">
+                  <span class="text-[10px] text-gold font-bold uppercase">Statistik Hero 4</span>
+                  <input type="text" id="cfg-stat4-val" placeholder="Nilai"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1.5 text-white font-bold">
+                  <input type="text" id="cfg-stat4-lbl" placeholder="Label"
+                    class="w-full bg-navy-900 border border-navy-700 rounded px-2.5 py-1 text-slate-300">
+                </div>
+              </div>
+            </div>
+
+            <!-- Profil Pemilik / Kreator Lensa Palopo -->
+            <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6 space-y-4">
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="user-check" class="w-5 h-5 text-gold"></i> Profil Pemilik Website (@lensa_palopo)
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Username Instagram</label>
+                  <input type="text" id="cfg-creator-handle"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Link Instagram</label>
+                  <input type="text" id="cfg-creator-ig-url"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block font-semibold text-slate-300 mb-1">Kutipan Bio & Dedikasi Lensa Palopo</label>
+                  <textarea id="cfg-creator-bio" rows="3"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none"></textarea>
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Peralatan Lensa & Kamera</label>
+                  <input type="text" id="cfg-creator-gear"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1">Prinsip Dokumentasi</label>
+                  <input type="text" id="cfg-creator-principle"
+                    class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white focus:border-gold focus:outline-none">
+                </div>
+              </div>
+
+              <div class="pt-3 flex justify-end">
+                <button type="submit"
+                  class="px-6 py-3 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-2 shadow-lg">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Simpan & Terapkan ke Dashboard Klien</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 3: GALERI FOTO (SUPABASE STORAGE UPLOAD) -->
+        <!-- ================================================== -->
+        <section id="view-photos" class="hidden space-y-5">
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="images" class="w-5 h-5 text-sky-400"></i> Kelola Galeri Foto Lensa Palopo
+              </h3>
+              <p class="text-xs text-slate-400">Unggah foto langsung dari perangkat lokal (Laptop / Ponsel) ke <code
+                  class="text-gold">Supabase Storage (lensa-palopo-media)</code>.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="openPhotoModal()"
+                class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+                <i data-lucide="upload" class="w-4 h-4"></i> Unggah Foto Baru
+              </button>
+              <button onclick="openBatchModal()"
+                class="px-3.5 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 text-sky-300 border border-sky-500/30 font-bold text-xs flex items-center gap-1.5">
+                <i data-lucide="files" class="w-4 h-4"></i> Unggah Banyak Foto Sekaligus
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Bulk Bar -->
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex flex-wrap items-center gap-2 flex-1">
+              <input type="text" id="admin-search" oninput="renderAdminPhotos()"
+                placeholder="Cari judul, lokasi, deskripsi..."
+                class="bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white w-full sm:w-64 focus:border-gold focus:outline-none">
+              <select id="admin-filter-cat" onchange="renderAdminPhotos()"
+                class="bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-white focus:border-gold focus:outline-none">
+                <option value="all">Semua Kategori</option>
+                <option value="pesisir">Pesisir & Bahari</option>
+                <option value="landskap">Landskap & Alam</option>
+                <option value="budaya">Sejarah & Budaya</option>
+                <option value="human">Human Interest</option>
+                <option value="kuliner">Kuliner Khas</option>
+                <option value="drone">Sudut Udara (Drone)</option>
+              </select>
+              <select id="admin-filter-vis" onchange="renderAdminPhotos()"
+                class="bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-white focus:border-gold focus:outline-none">
+                <option value="all">Semua Status</option>
+                <option value="visible">Ditampilkan</option>
+                <option value="hidden">Disembunyikan</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
+                <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this.checked)"
+                  class="w-4 h-4 accent-gold">
+                <span>Pilih Semua</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Bulk Action Bar -->
+          <div id="bulk-action-bar"
+            class="hidden bg-gold/15 border border-gold/40 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <span class="font-bold text-gold"><span id="selected-count">0</span> foto dipilih</span>
+            <div class="flex items-center gap-2">
+              <button onclick="bulkSetVisibility(true)"
+                class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">Tampilkan</button>
+              <button onclick="bulkSetVisibility(false)"
+                class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold">Sembunyikan</button>
+              <button onclick="bulkDeleteSelected()"
+                class="px-3 py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 font-semibold">Hapus
+                Terpilih</button>
+            </div>
+          </div>
+
+          <!-- Photos Grid -->
+          <div id="admin-photos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+          <div id="admin-empty-state"
+            class="hidden bg-navy-900 border border-navy-800 rounded-2xl p-10 text-center text-slate-400 text-sm">
+            Belum ada foto yang sesuai filter. Klik <strong>Tambah Foto Baru</strong> untuk mulai menambahkan.
+          </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 4: BERITA & CERITA LENSA PALOPO -->
+        <!-- ================================================== -->
+        <section id="view-articles" class="hidden space-y-5">
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="newspaper" class="w-5 h-5 text-purple-400"></i> Kelola Berita, Liputan & Cerita Kota
+                Palopo
+              </h3>
+              <p class="text-xs text-slate-400">Tambahkan berita terkini Kota Palopo, esai foto, atau liputan khusus
+                dari @lensa_palopo.</p>
+            </div>
+            <button onclick="openArticleEditorModal()"
+              class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Tulis Berita / Cerita Baru
+            </button>
+          </div>
+
+          <div id="admin-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 5: VIDEO & DOKUMENTER -->
+        <!-- ================================================== -->
+        <section id="view-videos" class="hidden space-y-5">
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="film" class="w-5 h-5 text-rose-400"></i> Kelola Video & Dokumenter Lensa Palopo
+              </h3>
+              <p class="text-xs text-slate-400">Mendukung link video <strong>YouTube</strong>, <strong>Google Drive
+                  Video</strong> (<code class="text-gold">drive.google.com/file/d/...</code>), atau file MP4.</p>
+            </div>
+            <button onclick="openVideoEditorModal()"
+              class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Video Dokumenter
+            </button>
+          </div>
+
+          <div id="admin-videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 6: WISATA & KULINER -->
+        <!-- ================================================== -->
+        <section id="view-tourism" class="hidden space-y-5">
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="compass" class="w-5 h-5 text-emerald-400"></i> Kelola Destinasi Wisata & Kuliner Kota
+                Palopo
+              </h3>
+              <p class="text-xs text-slate-400">Atur rekomendasi destinasi wisata bahari, alam pegunungan, dan rekreasi
+                keluarga di Palopo.</p>
+            </div>
+            <button onclick="openTourismEditorModal()"
+              class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Tambah Destinasi Wisata
+            </button>
+          </div>
+
+          <div id="admin-tourism-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 7: SOROTAN STORIES (INSTAGRAM HIGHLIGHTS) -->
+        <!-- ================================================== -->
+        <section id="view-stories" class="hidden space-y-5">
+          <div
+            class="bg-navy-900 border border-navy-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-5 h-5 text-gold"></i> Kelola Sorotan Stories Terkini (Folder & Album)
+              </h3>
+              <p class="text-xs text-slate-400">Konsep Sorotan Instagram: Setiap lingkaran adalah folder album yang
+                berisi beberapa foto atau video dan dapat dikelola isinya.</p>
+            </div>
+            <button onclick="openStoryEditorModal()"
+              class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+              <i data-lucide="folder-plus" class="w-4 h-4"></i> Buat Sorotan Baru
+            </button>
+          </div>
+
+          <div id="admin-stories-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- VIEW 8: SUPABASE CLOUD & VERCEL DEPLOYMENT -->
+        <!-- ================================================== -->
+        <section id="view-settings" class="hidden space-y-6">
+          <!-- Supabase Cloud Card -->
+          <div class="bg-navy-900 border border-emerald-500/30 rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span
+                  class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Cloud
+                  Database Resmi</span>
+                <h3 class="text-base font-bold text-white mt-1">Koneksi Supabase Cloud Database</h3>
+                <p class="text-xs text-slate-400">Hubungkan ke project Supabase gratis Anda agar seluruh foto, berita,
+                  video, dan pengaturan tampilan tersimpan di Cloud dan sinkron di semua perangkat pengunjung Vercel.
+                </p>
+              </div>
+              <button type="button" onclick="copySupabaseSql()"
+                class="px-3.5 py-2 rounded-xl bg-navy-950 hover:bg-navy-800 text-gold border border-gold/40 text-xs font-bold flex items-center gap-1.5">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Skrip SQL Tabel Supabase
+              </button>
+            </div>
+
+            <form id="supabase-config-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-2">
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1">Supabase Project URL</label>
+                <input type="url" id="sb-url-input" value="https://twmgcozbtptkesemxpth.supabase.co"
+                  placeholder="https://xxxxxxxxxxxx.supabase.co"
+                  class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:border-gold focus:outline-none">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1">Supabase Anon Public Key</label>
+                <input type="text" id="sb-key-input" value="sb_publishable_rEfZsWCti_dUhSuuDGlZzA_xHY2ldy5"
+                  placeholder="sb_publishable_..."
+                  class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:border-gold focus:outline-none">
+              </div>
+              <div class="sm:col-span-2 flex flex-wrap items-center justify-between gap-3 pt-1">
+                <span id="sb-status-text" class="text-xs text-emerald-400 font-semibold">Status: Terhubung Otomatis ke
+                  Supabase Cloud (twmgcozbtptkesemxpth.supabase.co)</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button type="button" onclick="pullFromCloudNow()"
+                    class="px-3.5 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-sky-300 border border-sky-500/30 font-bold text-xs flex items-center gap-1.5">
+                    <i data-lucide="cloud-download" class="w-4 h-4"></i> Tarik Data dari Cloud
+                  </button>
+                  <button type="submit"
+                    class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
+                    <i data-lucide="plug-zap" class="w-4 h-4"></i> Hubungkan & Sinkronkan ke Supabase
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Vercel Hosting & JSON Backup -->
+          <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6 space-y-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="globe" class="w-5 h-5 text-sky-400"></i> Hosting Vercel & Cadangan Berkas (<code
+                class="text-gold">data/photos.json</code>)
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Project ini sudah dilengkapi konfigurasi <code class="text-gold">vercel.json</code>. Saat di-hosting di
+              <strong>Vercel</strong>:
+              <br>1. Jika <strong>Supabase Cloud</strong> terhubung, setiap perubahan yang Anda simpan di Admin langsung
+              tampil secara <em>real-time</em> di semua pengunjung tanpa perlu deploy ulang.
+              <br>2. Anda juga dapat mengunduh berkas <code class="text-gold">photos.json</code> (berisi seluruh paket
+              foto, berita, video, wisata, dan tampilan) untuk disimpan ke folder <code
+                class="text-gold">data/photos.json</code> di repositori GitHub/Vercel Anda.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button onclick="exportPhotosJson()"
+                class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-2 shadow">
+                <i data-lucide="download" class="w-4 h-4"></i> Unduh Berkas data/photos.json Lengkap
+              </button>
+              <label
+                class="px-4 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 text-white border border-navy-700 font-bold text-xs flex items-center gap-2 cursor-pointer">
+                <i data-lucide="upload" class="w-4 h-4 text-sky-400"></i> Impor dari Berkas JSON
+                <input type="file" accept=".json" onchange="importPhotosJsonFile(event)" class="hidden">
+              </label>
+              <button onclick="resetFullCmsToDefault()"
+                class="px-4 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold text-xs flex items-center gap-2">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset ke Data Awal Bawaan
+              </button>
+            </div>
+          </div>
+
+          <!-- Change Password -->
+          <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 sm:p-6 space-y-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-gold"></i> Keamanan Akun Admin
+            </h3>
+            <form id="change-pass-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1">Username Baru</label>
+                <input type="text" id="new-admin-user" value="admin" required
+                  class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1">Password Baru</label>
+                <input type="password" id="new-admin-pass" required placeholder="Minimal 4 karakter"
+                  class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white">
+              </div>
+              <div class="flex items-end">
+                <button type="submit"
+                  class="w-full py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs">Perbarui
+                  Kredensial Login</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: ADD / EDIT PHOTO (DIRECT FILE UPLOAD TO SUPABASE STORAGE) -->
+  <!-- ======================================================== -->
+  <div id="photo-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl my-8">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 id="modal-title" class="text-base font-bold text-white">Unggah Foto Baru dari Perangkat</h3>
+        <button onclick="closePhotoModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="photo-form" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="photo-id">
+        <input type="hidden" id="photo-existing-url">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Pilih File Foto dari Perangkat (Laptop / Ponsel — Maks.
+            5 MB) *</label>
+          <input type="file" id="photo-file-input" accept="image/*"
+            onchange="handleFilePreview(this, 'photo-preview-img', 'photo-preview-placeholder', 'photo-file-info')"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer focus:border-gold focus:outline-none">
+          <p id="photo-file-info" class="hidden text-[11px] mt-1.5 text-emerald-400 font-semibold"></p>
+        </div>
+
+        <div
+          class="h-48 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+          <img id="photo-preview-img" class="hidden w-full h-full object-cover" alt="Preview Foto">
+          <div id="photo-preview-placeholder" class="text-slate-500 text-center p-4">
+            <i data-lucide="image-plus" class="w-8 h-8 mx-auto mb-1 opacity-50"></i>
+            <span>Pilih foto dari perangkat Anda untuk melihat pratinjau instan</span>
+          </div>
+          <!-- Indikator Loading Upload -->
+          <div id="photo-upload-loading"
+            class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+            <div class="w-7 h-7 border-3 border-gold border-t-transparent rounded-full animate-spin"></div>
+            <span id="photo-upload-status-text">Mengunggah foto ke Supabase Storage...</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Judul Karya Foto *</label>
+            <input type="text" id="photo-title" required placeholder="Contoh: Senja di Pelabuhan Tanjung Ringgit"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Kategori *</label>
+            <select id="photo-category"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+              <option value="landskap">Landskap & Alam</option>
+              <option value="pesisir">Pesisir & Bahari</option>
+              <option value="budaya">Sejarah & Budaya</option>
+              <option value="human">Human Interest</option>
+              <option value="kuliner">Kuliner Khas</option>
+              <option value="drone">Sudut Udara (Drone)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Lokasi Pemotretan</label>
+            <input type="text" id="photo-location" placeholder="Kec. Wara Timur, Kota Palopo"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Tanggal / Tahun</label>
+            <input type="date" id="photo-date"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Info Kamera / EXIF</label>
+            <input type="text" id="photo-exif" placeholder="Sony A7IV • 35mm f/1.8 • ISO 100"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Cerita / Deskripsi Foto</label>
+            <textarea id="photo-desc" rows="2" placeholder="Tuliskan cerita singkat di balik foto ini..."
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white"></textarea>
+          </div>
+        </div>
+
+        <label class="flex items-center gap-2 cursor-pointer pt-1">
+          <input type="checkbox" id="photo-visible" checked class="w-4 h-4 accent-gold">
+          <span class="text-slate-200 font-medium">Tampilkan langsung di Galeri Publik</span>
+        </label>
+
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closePhotoModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="photo-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold flex items-center gap-1.5">
+            <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+            <span>Unggah & Simpan Foto</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: BATCH MULTIPLE FILES UPLOAD TO SUPABASE STORAGE -->
+  <!-- ======================================================== -->
+  <div id="batch-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Unggah Banyak Foto Sekaligus dari Perangkat</h3>
+        <button onclick="closeBatchModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="batch-form" class="p-5 space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Pilih Beberapa File Foto Sekaligus (Maks. 5 MB / foto)
+            *</label>
+          <input type="file" id="batch-files-input" accept="image/*" multiple required
+            onchange="handleBatchFilesPreview(this)"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+          <p id="batch-files-info" class="text-[11px] text-slate-400 mt-1.5">Anda dapat memilih banyak foto sekaligus
+            dari galeri HP atau folder Laptop.</p>
+          <div id="batch-preview-grid"
+            class="hidden grid grid-cols-4 gap-2 mt-2 max-h-36 overflow-y-auto p-2 rounded-xl bg-navy-950 border border-navy-800">
+          </div>
+        </div>
+        <div id="batch-upload-loading"
+          class="hidden p-3 rounded-xl bg-navy-950 border border-gold/40 flex items-center gap-3 text-gold font-bold">
+          <div class="w-5 h-5 border-2 border-gold border-t-transparent rounded-full animate-spin shrink-0"></div>
+          <span id="batch-upload-status">Mengunggah foto ke Supabase Storage...</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Awalan Judul Foto</label>
+            <input type="text" id="batch-prefix" value="Dokumentasi Lensa Palopo"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Kategori</label>
+            <select id="batch-category"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+              <option value="landskap">Landskap & Alam</option>
+              <option value="pesisir">Pesisir & Bahari</option>
+              <option value="budaya">Sejarah & Budaya</option>
+              <option value="human">Human Interest</option>
+              <option value="kuliner">Kuliner Khas</option>
+              <option value="drone">Sudut Udara (Drone)</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Lokasi</label>
+            <input type="text" id="batch-location" value="Kota Palopo, Sulawesi Selatan"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+        </div>
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closeBatchModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="batch-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Unggah & Tambahkan
+            Semua</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 3: ADD / EDIT ARTICLE (BERITA & CERITA) -->
+  <!-- ======================================================== -->
+  <div id="article-editor-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl my-8">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 id="article-editor-title" class="text-base font-bold text-white">Tulis Berita / Cerita Lensa Palopo</h3>
+        <button onclick="closeArticleEditorModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="article-editor-form" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="art-id">
+        <input type="hidden" id="art-existing-img">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Judul Berita / Artikel *</label>
+            <input type="text" id="art-title" required
+              placeholder="Contoh: Festival Pesona Luwu Raya Meriahkan Pesisir Palopo"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Kategori Liputan *</label>
+            <select id="art-tag" class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+              <option value="Berita Kota">Berita Kota</option>
+              <option value="Jurnal Bahari">Jurnal Bahari</option>
+              <option value="Sejarah & Budaya">Sejarah & Budaya</option>
+              <option value="Eksplorasi Alam">Eksplorasi Alam</option>
+              <option value="Kuliner & UMKM">Kuliner & UMKM</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Tanggal & Waktu Baca</label>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="art-date" placeholder="18 Mei 2026"
+                class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-white">
+              <input type="text" id="art-readtime" placeholder="4 Menit Baca"
+                class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3 py-2 text-white">
+            </div>
+          </div>
+          <div class="sm:col-span-2 space-y-2">
+            <label class="block font-semibold text-slate-300">Unggah Foto Sampul Berita dari Perangkat (Maks. 5 MB)
+              *</label>
+            <input type="file" id="art-file-input" accept="image/*"
+              onchange="handleFilePreview(this, 'art-preview-img', 'art-preview-placeholder', 'art-file-info')"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+            <p id="art-file-info" class="hidden text-[11px] text-emerald-400 font-semibold"></p>
+            <div
+              class="h-40 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+              <img id="art-preview-img" class="hidden w-full h-full object-cover" alt="Preview Sampul Berita">
+              <div id="art-preview-placeholder" class="text-slate-500 text-center p-3">
+                <i data-lucide="image" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
+                <span>Pratinjau foto sampul berita akan tampil di sini</span>
+              </div>
+              <div id="art-upload-loading"
+                class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+                <div class="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+                <span>Mengunggah sampul berita ke Supabase Storage...</span>
+              </div>
+            </div>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Ringkasan Singkat (Tampil di Kartu Depan) *</label>
+            <textarea id="art-preview" rows="2" required placeholder="Ringkasan 1-2 kalimat..."
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white"></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Isi Berita / Cerita Lengkap (Pisahkan paragraf dengan
+              baris baru) *</label>
+            <textarea id="art-content" rows="6" required
+              placeholder="Tuliskan isi berita atau cerita lengkap di sini..."
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white leading-relaxed"></textarea>
+          </div>
+        </div>
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closeArticleEditorModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="art-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Publikasikan Berita /
+            Cerita</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 4: ADD / EDIT VIDEO DOKUMENTER -->
+  <!-- ======================================================== -->
+  <div id="video-editor-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div
+      class="bg-navy-900 border border-navy-700 rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl my-8 relative">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 id="video-editor-title" class="text-base font-bold text-white">Tambah / Edit Video Dokumenter</h3>
+        <button onclick="closeVideoEditorModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="video-editor-form" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="vid-id">
+        <input type="hidden" id="vid-existing-img">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Judul Video / Dokumenter *</label>
+          <input type="text" id="vid-title" required placeholder="Contoh: Ekspedisi Kabut Puncak Kambo"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2.5 text-white">
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Durasi Video</label>
+            <input type="text" id="vid-duration" placeholder="06:30"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Lokasi Liputan</label>
+            <input type="text" id="vid-location" placeholder="Kambo, Kota Palopo"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-navy-950 border border-navy-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-gold">Sumber File Video Dokumenter (Maks. 500 MB)</label>
+            <span
+              class="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold border border-gold/30 font-semibold">Upload
+              Lokal / Link</span>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Opsi 1: Unggah File Video Langsung dari Laptop / HP
+              (MP4, MOV, WEBM — Mendukung 300 MB+)</label>
+            <input type="file" id="vid-video-file-input" accept="video/mp4,video/webm,video/quicktime,video/*"
+              onchange="handleVideoFilePreview(this)"
+              class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3.5 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-emerald-500 file:text-navy-950 hover:file:bg-emerald-400 cursor-pointer">
+            <p id="vid-video-file-info" class="hidden text-[11px] text-emerald-400 font-semibold mt-1.5"></p>
+            <video id="vid-video-preview-player"
+              class="hidden w-full max-h-44 rounded-xl mt-2 bg-black border border-navy-700" controls></video>
+          </div>
+          <div class="pt-2 border-t border-navy-800/80">
+            <label class="block font-semibold text-slate-300 mb-1">Opsi 2: Atau Tempel Link Video Eksternal (YouTube /
+              Google Drive / Direct MP4 URL)</label>
+            <input type="text" id="vid-url"
+              placeholder="https://www.youtube.com/watch?v=... atau kosongkan jika upload file video di atas"
+              class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+            <span class="text-[11px] text-slate-400 mt-1 block">💡 Tips: Jika Anda mengunggah file video dari perangkat
+              pada Opsi 1, URL publik videonya akan terisi otomatis setelah terunggah.</span>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <label class="block font-semibold text-slate-300">Unggah Foto Sampul / Thumbnail (Opsional — Jika Anda memilih
+            file MP4 di sini, sistem otomatis membuat thumbnail dari video)</label>
+          <input type="file" id="vid-file-input" accept="image/*,video/mp4,video/webm,video/quicktime,video/*"
+            onchange="handleFilePreview(this, 'vid-preview-img', 'vid-preview-placeholder', 'vid-file-info')"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+          <p id="vid-file-info" class="hidden text-[11px] text-emerald-400 font-semibold"></p>
+          <div
+            class="h-44 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+            <img id="vid-preview-img" class="hidden w-full h-full object-cover" alt="Preview Thumbnail Video">
+            <div id="vid-preview-placeholder" class="text-slate-500 text-center p-3">
+              <i data-lucide="film" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
+              <span>Pratinjau sampul/thumbnail video akan tampil di sini</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Sinopsis / Deskripsi Video *</label>
+          <textarea id="vid-synopsis" rows="3" required placeholder="Ceritakan isi rekaman dokumenter ini..."
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white"></textarea>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer pt-1">
+          <input type="checkbox" id="vid-is-featured" class="w-4 h-4 accent-gold">
+          <span class="text-gold font-bold">Jadikan sebagai Dokumenter Pilihan Utama (Banner Besar)</span>
+        </label>
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closeVideoEditorModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="vid-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Simpan Video</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 5: ADD / EDIT TOURISM (WISATA & KULINER) -->
+  <!-- ======================================================== -->
+  <div id="tourism-editor-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl my-8">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 id="tourism-editor-title" class="text-base font-bold text-white">Tambah / Edit Destinasi Wisata Palopo</h3>
+        <button onclick="closeTourismEditorModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="tourism-editor-form" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="tour-id">
+        <input type="hidden" id="tour-existing-img">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Nama Destinasi Wisata *</label>
+            <input type="text" id="tour-name" required placeholder="Contoh: Air Terjun Latuppa"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Kategori Wisata *</label>
+            <select id="tour-category"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+              <option value="bahari">Pesisir & Bahari</option>
+              <option value="alam">Alam & Pegunungan</option>
+              <option value="keluarga">Spot Santai & Keluarga</option>
+              <option value="kuliner">Kuliner Khas Palopo</option>
+              <option value="sejarah">Wisata Sejarah & Budaya</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Jarak dari Pusat Kota</label>
+            <input type="text" id="tour-distance" placeholder="15 Menit dari Pusat Kota"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-300 mb-1">Waktu Kunjungan Terbaik</label>
+            <input type="text" id="tour-besttime" placeholder="Pagi & Sore Hari"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+          </div>
+          <div class="sm:col-span-2 space-y-2">
+            <label class="block font-semibold text-slate-300">Unggah Foto Destinasi dari Perangkat (Maks. 5 MB)
+              *</label>
+            <input type="file" id="tour-file-input" accept="image/*"
+              onchange="handleFilePreview(this, 'tour-preview-img', 'tour-preview-placeholder', 'tour-file-info')"
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+            <p id="tour-file-info" class="hidden text-[11px] text-emerald-400 font-semibold"></p>
+            <div
+              class="h-40 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+              <img id="tour-preview-img" class="hidden w-full h-full object-cover" alt="Preview Destinasi">
+              <div id="tour-preview-placeholder" class="text-slate-500 text-center p-3">
+                <i data-lucide="compass" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
+                <span>Pratinjau foto destinasi wisata akan tampil di sini</span>
+              </div>
+              <div id="tour-upload-loading"
+                class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+                <div class="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+                <span>Mengunggah foto destinasi ke Supabase Storage...</span>
+              </div>
+            </div>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-300 mb-1">Deskripsi Daya Tarik *</label>
+            <textarea id="tour-highlight" rows="3" required placeholder="Jelaskan keunikan destinasi wisata ini..."
+              class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white"></textarea>
+          </div>
+        </div>
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closeTourismEditorModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="tour-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Simpan
+            Destinasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 6: ADD / EDIT STORY REEL FOLDER (SOROTAN) -->
+  <!-- ======================================================== -->
+  <div id="story-editor-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-md w-full overflow-hidden shadow-2xl my-8">
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between">
+        <h3 id="story-editor-title" class="text-base font-bold text-white">Tambah / Edit Folder Sorotan</h3>
+        <button onclick="closeStoryEditorModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"
+            class="w-5 h-5"></i></button>
+      </div>
+      <form id="story-editor-form" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="st-id">
+        <input type="hidden" id="st-existing-img">
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Judul Folder Sorotan *</label>
+          <input type="text" id="st-title" required placeholder="Contoh: Fajar Labombo, Kuliner Khas, dsb."
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Label Waktu / Keterangan Singkat</label>
+          <input type="text" id="st-time" value="Baru saja" placeholder="Contoh: 2 jam lalu atau Sorotan Utama"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white">
+        </div>
+        <div class="space-y-2">
+          <label class="block font-semibold text-slate-300">Foto Sampul Lingkaran (Cover Sorotan) *</label>
+          <input type="file" id="st-file-input" accept="image/*"
+            onchange="handleFilePreview(this, 'st-preview-img', 'st-preview-placeholder', 'st-file-info')"
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+          <p id="st-file-info" class="hidden text-[11px] text-emerald-400 font-semibold"></p>
+          <div
+            class="h-40 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+            <img id="st-preview-img" class="hidden w-full h-full object-cover" alt="Preview Story">
+            <div id="st-preview-placeholder" class="text-slate-500 text-center p-3">
+              <i data-lucide="sparkles" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
+              <span>Pratinjau foto sampul sorotan akan tampil di sini</span>
+            </div>
+            <div id="st-upload-loading"
+              class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+              <div class="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+              <span>Mengunggah foto sampul ke Supabase Storage...</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1">Narasi / Caption Awal</label>
+          <textarea id="st-caption" rows="2" placeholder="Tuliskan keterangan singkat mengenai album sorotan ini..."
+            class="w-full bg-navy-950 border border-navy-700 rounded-xl px-3.5 py-2 text-white"></textarea>
+        </div>
+        <div class="pt-3 border-t border-navy-800 flex justify-end gap-2">
+          <button type="button" onclick="closeStoryEditorModal()"
+            class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
+          <button type="submit" id="st-submit-btn"
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Simpan
+            Sorotan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 6B: KELOLA ISI MEDIA SOROTAN STORY (FOTO & VIDEO) -->
+  <!-- ======================================================== -->
+  <div id="story-items-modal"
+    class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div
+      class="bg-navy-900 border border-navy-700 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl my-6 flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="p-4 border-b border-navy-800 flex items-center justify-between bg-navy-950/60">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-gold via-amber-400 to-sky-400 shrink-0">
+            <img id="sim-cover-img" src="" alt="Cover"
+              class="w-full h-full object-cover rounded-full border border-navy-950">
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="sim-title" class="text-base font-bold text-white">Kelola Isi Sorotan</h3>
+              <span id="sim-count-badge"
+                class="px-2 py-0.5 rounded-full bg-gold/20 text-gold text-[10px] font-bold border border-gold/30">0
+                Media</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Tambah, ubah, atau hapus foto & video di dalam sorotan ini seperti di
+              Instagram.</p>
+          </div>
+        </div>
+        <button onclick="closeStoryItemsModal()"
+          class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-navy-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Body -->
+      <div class="overflow-y-auto flex-1 p-4 sm:p-5 space-y-6">
+        <!-- Section A: Daftar Slide yang Sudah Ada -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-gold flex items-center gap-1.5">
+              <i data-lucide="layers" class="w-4 h-4"></i> Daftar Foto & Video Dalam Sorotan
+            </h4>
+            <span class="text-[11px] text-slate-400">Urutan slide sesuai nomor</span>
+          </div>
+
+          <div id="sim-items-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Section B: Form Tambah Foto / Video Baru ke Sorotan Ini -->
+        <div class="border-t border-navy-800 pt-5">
+          <div class="bg-navy-950/70 border border-navy-800 rounded-xl p-4 space-y-3.5">
+            <h4 class="text-xs font-bold text-white flex items-center gap-2">
+              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Tambah Foto atau Video Baru ke Sorotan
+              Ini
+            </h4>
+
+            <form id="story-add-item-form" class="space-y-3 text-xs">
+              <input type="hidden" id="sim-story-id">
+
+              <!-- Pilihan Tipe Media -->
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1.5">Jenis Media *</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label
+                    class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-gold has-[:checked]:border-gold has-[:checked]:bg-gold/10">
+                    <input type="radio" name="sim-item-type" value="image" checked
+                      onchange="toggleSimMediaType('image')" class="text-gold focus:ring-gold">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <i data-lucide="image" class="w-4 h-4 text-gold"></i> Foto (Gambar)
+                    </span>
+                  </label>
+                  <label
+                    class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-sky-400 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-400/10">
+                    <input type="radio" name="sim-item-type" value="video" onchange="toggleSimMediaType('video')"
+                      class="text-sky-400 focus:ring-sky-400">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <i data-lucide="video" class="w-4 h-4 text-sky-400"></i> Video (MP4/URL)
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Upload File Perangkat -->
+              <div class="space-y-1.5">
+                <label id="sim-upload-label" class="block font-semibold text-slate-300">Pilih File dari Perangkat
+                  *</label>
+                <input type="file" id="sim-file-input" accept="image/*" onchange="handleSimFilePreview(this)"
+                  class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
+              </div>
+
+              <!-- Atau Input URL Langsung -->
+              <div>
+                <label class="block font-semibold text-slate-400 mb-1">Atau Gunakan URL Media Langsung
+                  (Opsional)</label>
+                <input type="url" id="sim-url-input" placeholder="https://domain.com/media.jpg atau .mp4"
+                  oninput="handleSimUrlInput(this.value)"
+                  class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-white placeholder-slate-500">
+              </div>
+
+              <!-- Preview Box Media Baru -->
+              <div
+                class="h-44 rounded-xl bg-navy-900 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+                <img id="sim-preview-img" class="hidden w-full h-full object-contain bg-black/40" alt="Preview Media">
+                <video id="sim-preview-video" class="hidden w-full h-full object-contain bg-black/40" controls
+                  playsinline></video>
+                <div id="sim-preview-placeholder" class="text-slate-500 text-center p-3">
+                  <i data-lucide="eye" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
+                  <span>Pratinjau foto atau video yang akan ditambahkan</span>
+                </div>
+                <div id="sim-upload-loading"
+                  class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+                  <div class="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+                  <span id="sim-upload-loading-text">Mengunggah media ke Supabase Storage...</span>
+                </div>
+              </div>
+
+              <!-- Caption Slide -->
+              <div>
+                <label class="block font-semibold text-slate-300 mb-1">Caption / Keterangan Slide</label>
+                <textarea id="sim-caption-input" rows="2"
+                  placeholder="Tuliskan keterangan cerita untuk foto/video ini..."
+                  class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-white placeholder-slate-500"></textarea>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="submit" id="sim-add-btn"
+                  class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-extrabold flex items-center gap-1.5 shadow transition-all">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Tambahkan ke Sorotan Ini
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-3 border-t border-navy-800 bg-navy-950/70 flex justify-between items-center text-xs">
+        <span class="text-slate-400">Perubahan otomatis disimpan ke Supabase Cloud & Portal</span>
+        <button type="button" onclick="closeStoryItemsModal()"
+          class="px-4 py-1.5 rounded-xl bg-navy-800 hover:bg-navy-700 text-white font-semibold">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- FULL SCREEN PROGRESS OVERLAY UNTUK UPLOAD VIDEO (Persen, Kecepatan, MB, ETA) -->
+  <!-- ======================================================== -->
+  <div id="vid-upload-overlay"
+    class="hidden fixed inset-0 z-[9999] bg-navy-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+    <div
+      class="w-16 h-16 rounded-full bg-gold/15 border-2 border-gold/40 flex items-center justify-center text-gold mb-3 animate-pulse shadow-lg">
+      <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+    </div>
+    <h4 class="text-base sm:text-lg font-black text-white" id="vid-upload-overlay-title">Sedang Mengunggah Video</h4>
+    <p class="text-xs text-slate-300 mt-1 max-w-sm truncate" id="vid-upload-overlay-sub">Menyiapkan berkas video...</p>
+
+    <!-- Big Percent & Remaining Badge -->
+    <div class="mt-4 flex items-baseline justify-center gap-2">
+      <span id="vid-upload-percent"
+        class="text-4xl sm:text-5xl font-black text-gold tabular-nums tracking-tight">0%</span>
+      <span id="vid-upload-remaining"
+        class="text-xs font-extrabold text-amber-300 px-2.5 py-1 rounded-full bg-amber-400/15 border border-amber-400/30">Sisa
+        100%</span>
+    </div>
+
+    <!-- Glowing Progress Bar -->
+    <div
+      class="w-full max-w-md mt-4 h-3.5 rounded-full bg-navy-900 border border-navy-700 p-0.5 overflow-hidden shadow-inner">
+      <div id="vid-upload-bar"
+        class="h-full w-0 bg-gradient-to-r from-gold via-amber-400 to-emerald-400 rounded-full transition-all duration-150 shadow-sm">
+      </div>
+    </div>
+
+    <!-- Stats Counter -->
+    <div
+      class="w-full max-w-md mt-4 grid grid-cols-3 gap-2 p-3 rounded-xl bg-navy-900/90 border border-navy-800 text-[11px] font-mono shadow-lg">
+      <div class="text-left">
+        <span class="block text-[9px] font-sans text-slate-400 uppercase font-bold">Terunggah</span>
+        <span id="vid-upload-bytes" class="text-white font-bold">0 / 0 MB</span>
+      </div>
+      <div class="text-center border-x border-navy-800 px-1">
+        <span class="block text-[9px] font-sans text-slate-400 uppercase font-bold">Kecepatan</span>
+        <span id="vid-upload-speed" class="text-sky-300 font-bold">— MB/s</span>
+      </div>
+      <div class="text-right">
+        <span class="block text-[9px] font-sans text-slate-400 uppercase font-bold">Sisa Waktu</span>
+        <span id="vid-upload-eta" class="text-emerald-300 font-bold">± — dtk</span>
+      </div>
+    </div>
+
+    <!-- Steps Indicators -->
+    <div class="w-full max-w-md mt-4 text-left space-y-2 text-xs bg-navy-900/60 p-3 rounded-xl border border-navy-800">
+      <div id="vid-step-thumb" class="flex items-center gap-2.5 text-slate-300">
+        <span id="vid-step-thumb-icon"
+          class="w-5 h-5 rounded-full border border-gold text-gold flex items-center justify-center text-[10px] font-bold">1</span>
+        <span id="vid-step-thumb-text">Sampul Video / Thumbnail (JPG)</span>
+      </div>
+      <div id="vid-step-video" class="flex items-center gap-2.5 text-slate-300">
+        <span id="vid-step-video-icon"
+          class="w-5 h-5 rounded-full border border-slate-600 flex items-center justify-center text-[10px] font-bold">2</span>
+        <span id="vid-step-video-text">Berkas Video Asli (MP4)</span>
+      </div>
+    </div>
+
+    <p class="text-[11px] text-slate-400 mt-4 max-w-xs leading-relaxed">
+      💡 Mohon tunggu hingga proses selesai 100%. Jangan menutup jendela ini saat pengunggahan berjalan.
+    </p>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="admin-toast"
+    class="fixed bottom-5 right-5 z-50 bg-navy-900 border border-gold/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-semibold opacity-0 translate-y-3 pointer-events-none transition-all duration-300">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-gold shrink-0"></i>
+    <span id="admin-toast-msg">Tersimpan</span>
+  </div>
+
+  <!-- Dexie.js & Supabase JS SDK -->
+  <script src="https://unpkg.com/dexie@3.2.7/dist/dexie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin.js"></script>
+</body>
+
+</html>

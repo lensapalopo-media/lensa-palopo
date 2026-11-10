@@ -68,7 +68,7 @@ img,
 video,
 iframe {
   max-width: 100%;
-   display: block;
+  display: block;
 }
 
 /* --------------------------------------------------------------------------
@@ -219,6 +219,7 @@ iframe {
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   100% {
     transform: translate3d(-50%, 0, 0);
   }
@@ -410,7 +411,7 @@ iframe {
   overflow: hidden;
   border-radius: var(--card-radius);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lensa-card:hover,
@@ -495,9 +496,12 @@ iframe {
 }
 
 @keyframes floatSlow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-6px);
   }
@@ -544,6 +548,7 @@ iframe {
    A. MOBILE KECIL & STANDAR (<= 640px)
    ========================================================== */
 @media (max-width: 640px) {
+
   /* Proporsi Tipografi Mobile Anti-Tabrakan */
   h1,
   #hero-title {
@@ -626,8 +631,8 @@ iframe {
     gap: 0.65rem !important;
   }
 
-  .hero-actions > a,
-  .hero-actions > button {
+  .hero-actions>a,
+  .hero-actions>button {
     width: 100% !important;
     justify-content: center !important;
     padding-top: 0.75rem !important;
@@ -682,7 +687,7 @@ iframe {
   }
 
   /* Modals di Layar Ponsel: Sesuai Tinggi Layar Dinamis (dvh) */
-  #story-modal > div {
+  #story-modal>div {
     height: 86dvh !important;
     max-height: 620px !important;
     width: calc(100vw - 24px) !important;
@@ -690,9 +695,9 @@ iframe {
     border-radius: 1.25rem !important;
   }
 
-  #lightbox-modal > div,
-  #doc-player-modal > div,
-  #itineraryModal > div {
+  #lightbox-modal>div,
+  #doc-player-modal>div,
+  #itineraryModal>div {
     max-height: 88dvh !important;
     width: calc(100vw - 20px) !important;
     margin: auto;
@@ -710,6 +715,7 @@ iframe {
    B. TABLET & IPAD (641px s/d 1024px)
    ========================================================== */
 @media (min-width: 641px) and (max-width: 1024px) {
+
   h1,
   #hero-title {
     font-size: clamp(2.15rem, 4.5vw, 2.75rem) !important;
@@ -748,6 +754,7 @@ iframe {
    C. LAPTOP & DESKTOP (> 1024px)
    ========================================================== */
 @media (min-width: 1025px) {
+
   #gallery-grid .lensa-card,
   #tourism-cards-container .lensa-card {
     flex: 0 0 350px !important;
@@ -797,10 +804,10 @@ iframe {
 }
 
 #doc-player-modal-dialog.is-landscape {
-  max-width: 52rem !important; /* max-w-4xl */
+  max-width: 52rem !important;
+  /* max-w-4xl */
 }
 
 #doc-player-screen-wrapper.is-landscape {
   aspect-ratio: 16 / 9 !important;
 }
-
