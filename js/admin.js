@@ -583,7 +583,7 @@ function extractVideoFrameDataUrl(videoFile) {
       tempVideo.src = objUrl;
 
       const cleanup = () => {
-        try { URL.revokeObjectURL(objUrl); } catch (e) {}
+        try { URL.revokeObjectURL(objUrl); } catch (e) { }
       };
 
       const safeResolve = (val) => {
@@ -912,7 +912,7 @@ function uploadFileToStorageWithProgress(file, filePath, onProgress) {
         try {
           const body = JSON.parse(xhr.responseText);
           msg = body.message || body.error || msg;
-        } catch (e) {}
+        } catch (e) { }
         reject(new Error(msg));
       }
     };
@@ -1251,7 +1251,7 @@ async function loadCmsData() {
       console.log('[CMS Admin] Memuat data dari Shared IndexedDB.');
       return;
     }
-  } catch (idbErr) {}
+  } catch (idbErr) { }
 
   // 3. Fallback: data/photos.json static file
   try {
@@ -1461,7 +1461,7 @@ async function sha256Text(text) {
       const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    } catch (e) {}
+    } catch (e) { }
   }
   let h1 = 0xdeadbeef ^ clean.length, h2 = 0x41c6ce57 ^ clean.length;
   for (let i = 0, ch; i < clean.length; i++) {
@@ -1544,7 +1544,7 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_AUTH));
     const inputHash = await sha256Text(password);
     const isMatch = (username.toLowerCase() === saved.username.toLowerCase()) &&
-                    (inputHash === saved.passHash || (saved.plainFallback && password === saved.plainFallback));
+      (inputHash === saved.passHash || (saved.plainFallback && password === saved.plainFallback));
     if (isMatch) {
       loginSuccess = true;
       loggedInUser = saved.username;
@@ -1568,7 +1568,7 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
 function logoutAdmin() {
   const sb = supabaseClient || initSupabaseClient();
   if (sb && sb.auth && typeof sb.auth.signOut === 'function') {
-    sb.auth.signOut().catch(() => {});
+    sb.auth.signOut().catch(() => { });
   }
   sessionStorage.removeItem(STORAGE_KEY_SESSION);
   window.location.reload();
@@ -2577,7 +2577,7 @@ document.getElementById('video-editor-form').addEventListener('submit', async (e
     await saveCmsData(true);
 
     if (selectedVideoFile && videoUrl.startsWith('idb-video://')) {
-      showAdminToast(`ℹ️ Video (${(selectedVideoFile.size / (1024 * 1024)).toFixed(1)} MB) tersimpan di Browser (IndexedDB) & siap diputar di Klien!`);
+      showAdminToast(`ℹ️ Video tersimpan di browser lokal. Untuk tayang publik di Cloudflare Pages, gunakan link YouTube/Google Drive/URL video.`, 6000);
     } else {
       showAdminToast('✅ Video dokumenter berhasil disimpan!');
     }

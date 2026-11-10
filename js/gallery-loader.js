@@ -320,15 +320,18 @@
         }
 
         if (videoRows.length > 0) {
+          const DEFAULT_DOC_URL = 'https://www.youtube.com/watch?v=t2tjfELFsSY';
           baseBundle.videos = videoRows.map((row, idx) => {
             const thumbUrl = (row.img || row.image_url || '').trim();
+            const rawUrl = (row.video_url || row.videoUrl || '').trim();
             return {
               id: row.id || `doc-${idx + 1}`,
               title: row.title || 'Dokumenter Lensa Palopo',
               duration: row.duration || '05:00',
               location: row.time_label || 'Kota Palopo',
               synopsis: row.caption || '',
-              videoUrl: row.video_url || '',
+              videoUrl: rawUrl || DEFAULT_DOC_URL,
+              fallbackUrl: DEFAULT_DOC_URL,
               isFeatured: row.category === 'featured_doc',
               thumb: thumbUrl,
               img: thumbUrl
@@ -627,15 +630,18 @@
 
     // 4. Sinkronisasi Video Dokumenter (`STATE.documentaries`, `window.documentariesData`, & Banner Utama `#feat-doc-*`)
     if (Array.isArray(bundle.videos)) {
+      const DEFAULT_DOC_URL = 'https://www.youtube.com/watch?v=t2tjfELFsSY';
       const normalizedVideos = bundle.videos.map((vid, idx) => {
         const thumbUrl = (vid.thumb || vid.img || '').trim();
+        const rawVideoUrl = (vid.videoUrl || vid.video_url || '').trim();
         return {
           id: vid.id || `doc-${idx + 1}`,
           title: vid.title || 'Dokumenter Lensa Palopo',
           duration: vid.duration || '05:00',
           location: vid.location || 'Kota Palopo',
           synopsis: vid.synopsis || vid.desc || '',
-          videoUrl: vid.videoUrl || '',
+          videoUrl: rawVideoUrl || DEFAULT_DOC_URL,
+          fallbackUrl: DEFAULT_DOC_URL,
           isFeatured: Boolean(vid.isFeatured),
           thumb: thumbUrl,
           img: thumbUrl
