@@ -68,7 +68,7 @@ function initSupabaseClient() {
   }
   try {
     supabaseClient = window.supabase.createClient(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false }
+      auth: { persistSession: true, autoRefreshToken: true }
     });
     console.log('[Supabase Admin] Client berhasil diinisialisasi otomatis ke:', url);
     return supabaseClient;
@@ -1516,14 +1516,43 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
   const errEl = document.getElementById('auth-error');
   errEl.classList.add('hidden');
 
-  await ensureDefaultCredentials();
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_AUTH));
-  const inputHash = await sha256Text(password);
-  const isMatch = (username.toLowerCase() === saved.username.toLowerCase()) &&
-                  (inputHash === saved.passHash || (saved.plainFallback && password === saved.plainFallback));
+  let loginSuccess = false;
+  let loggedInUser = username;
 
-  if (!isMatch) {
-    errEl.textContent = 'Username atau password salah! Akses ditolak.';
+  // 1. Coba login langsung via Supabase Authentication (Cloud Auth)
+  const sb = supabaseClient || initSupabaseClient();
+  if (sb && sb.auth && typeof sb.auth.signInWithPassword === 'function') {
+    try {
+      const emailToTest = username.includes('@') ? username : `${username}@lensapalopo.com`;
+      const { data, error } = await sb.auth.signInWithPassword({
+        email: emailToTest,
+        password: password
+      });
+      if (!error && data && data.user) {
+        loginSuccess = true;
+        loggedInUser = data.user.email || username;
+        console.log('[Supabase Auth] Login berhasil via Cloud Auth:', loggedInUser);
+      }
+    } catch (sbErr) {
+      console.warn('[Supabase Auth] Login via Supabase gagal/skip:', sbErr);
+    }
+  }
+
+  // 2. Jika bukan via Supabase Auth, periksa kredensial lokal (Fallback SHA-256)
+  if (!loginSuccess) {
+    await ensureDefaultCredentials();
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_AUTH));
+    const inputHash = await sha256Text(password);
+    const isMatch = (username.toLowerCase() === saved.username.toLowerCase()) &&
+                    (inputHash === saved.passHash || (saved.plainFallback && password === saved.plainFallback));
+    if (isMatch) {
+      loginSuccess = true;
+      loggedInUser = saved.username;
+    }
+  }
+
+  if (!loginSuccess) {
+    errEl.textContent = 'Username/Email atau password salah! Akses ditolak.';
     errEl.classList.remove('hidden');
     return;
   }
@@ -1533,10 +1562,14 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
   document.getElementById('admin-app').classList.remove('hidden');
   await loadCmsData();
   renderEverything();
-  showAdminToast('Selamat datang di Dashboard Full Control Lensa Palopo!');
+  showAdminToast(`Selamat datang di Dashboard Admin (${loggedInUser})!`);
 });
 
 function logoutAdmin() {
+  const sb = supabaseClient || initSupabaseClient();
+  if (sb && sb.auth && typeof sb.auth.signOut === 'function') {
+    sb.auth.signOut().catch(() => {});
+  }
   sessionStorage.removeItem(STORAGE_KEY_SESSION);
   window.location.reload();
 }
