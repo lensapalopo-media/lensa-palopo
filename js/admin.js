@@ -940,65 +940,15 @@ async function uploadVideoToSupabaseStorage(file, folder = 'videos-mp4', onProgr
   const sizeMbNum = file.size / (1024 * 1024);
   const sizeMb = sizeMbNum.toFixed(1);
 
-  // 1. Jika ukuran video > 50 MB (misal 300 MB):
-  //    Batas server Supabase Storage Free Tier adalah 50 MB per file (HTTP 413 Payload Too Large).
-  //    Mengunggah 300 MB ke cloud gratis pasti ditolak setelah menunggu belasan menit.
-  //    Sistem secara cerdas langsung menyimpannya ke Penyimpanan Browser Berkapasitas Besar (IndexedDB)
-  //    disertai simulasi animasi progres visual yang mulus dan cepat (0% -> 100%)!
-  if (sizeMbNum > 50) {
-    console.log(`[Supabase Storage] Ukuran video (${sizeMb} MB) > batas Free Tier 50 MB. Menyimpan langsung ke IndexedDB...`);
-    const idbVideoKey = `idb-video://${uniqueFileName}`;
-
-    if (typeof onProgress === 'function') {
-      const steps = 14;
-      for (let s = 1; s <= steps; s++) {
-        const pct = (s / steps) * 100;
-        const loadedSim = (file.size * (s / steps));
-        onProgress({
-          loaded: loadedSim,
-          total: file.size,
-          percent: pct,
-          speed: 55 * 1024 * 1024, // 55 MB/s
-          etaSec: (steps - s) * 0.1,
-          statusNote: `Menyimpan ke Penyimpanan Browser Cepat (${(loadedSim / (1024 * 1024)).toFixed(1)} / ${sizeMb} MB)...`
-        });
-        await new Promise(r => setTimeout(r, 90));
-      }
-    }
-
-    const savedInIdb = await putToSharedIndexedDB(idbVideoKey, file);
-    if (savedInIdb) {
-      return idbVideoKey;
-    }
-  }
-
-  // 2. Jika ukuran file <= 50 MB, unggah langsung ke Supabase Storage Cloud dengan progres real-time
+  // Unggah langsung berkas video ke Supabase Storage Cloud ('lensa-palopo-media')
   try {
     console.log(`[Supabase Storage] Mengunggah video (${sizeMb} MB) ke bucket '${SUPABASE_STORAGE_BUCKET}':`, filePath);
     const publicUrl = await uploadFileToStorageWithProgress(file, filePath, onProgress);
     console.log('[Supabase Storage] Upload video berhasil! Public URL:', publicUrl);
     return publicUrl;
   } catch (videoErr) {
-    if (String(videoErr?.message || '').toLowerCase().includes('bucket not found')) {
-      throw new Error('Bucket "lensa-palopo-media" belum dibuat di Supabase Storage! Silakan buat bucket publik "lensa-palopo-media" di Dashboard Supabase agar video dapat tersimpan di cloud.');
-    }
-    console.warn(`[Supabase Storage] Upload video (${sizeMb} MB) ke cloud ditolak/gagal (${videoErr?.message || videoErr}). Menyimpan ke IndexedDB lokal...`);
-    const idbVideoKey = `idb-video://${uniqueFileName}`;
-    const savedInIdb = await putToSharedIndexedDB(idbVideoKey, file);
-    if (savedInIdb) {
-      if (typeof onProgress === 'function') {
-        onProgress({
-          loaded: file.size,
-          total: file.size,
-          percent: 100,
-          speed: 0,
-          etaSec: 0,
-          statusNote: `Tersimpan di Penyimpanan Browser (${sizeMb} MB)`
-        });
-      }
-      return idbVideoKey;
-    }
-    throw videoErr;
+    console.error('[Supabase Storage] Gagal mengunggah video:', videoErr);
+    throw new Error(`Gagal mengunggah video ke Supabase Storage (${sizeMb} MB): ${videoErr.message || videoErr}`);
   }
 }
 
@@ -2579,11 +2529,7 @@ document.getElementById('video-editor-form').addEventListener('submit', async (e
     renderAdminVideos();
     await saveCmsData(true);
 
-    if (selectedVideoFile && videoUrl.startsWith('idb-video://')) {
-      showAdminToast(`ℹ️ Video tersimpan di browser lokal. Untuk tayang publik di Cloudflare Pages, gunakan link YouTube/Google Drive/URL video.`, 6000);
-    } else {
-      showAdminToast('✅ Video dokumenter berhasil disimpan!');
-    }
+    showAdminToast('✅ Video dokumenter berhasil diunggah ke Supabase Storage & disimpan!');
   } catch (err) {
     console.error('[Video Upload Error]:', err);
     showAdminToast('⚠️ ' + err.message);

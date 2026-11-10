@@ -3439,12 +3439,7 @@
         videoEl.src = embed.url;
         videoEl.poster = doc.thumb || doc.img || '';
         videoEl.onerror = () => {
-          console.warn('[DocPlayer Banner] Video stream gagal dimuat, beralih ke YouTube embed...');
-          if (iframeEl) {
-            videoEl.classList.add('hidden');
-            iframeEl.src = 'https://www.youtube.com/embed/t2tjfELFsSY?autoplay=1&rel=0&enablejsapi=1';
-            iframeEl.classList.remove('hidden');
-          }
+          console.warn('[DocPlayer Banner] Video stream gagal dimuat.');
         };
         videoEl.onloadedmetadata = () => {
           if (videoEl.videoWidth && videoEl.videoHeight) {
@@ -3595,12 +3590,7 @@
         videoEl.src = embed.url;
         videoEl.poster = doc.thumb || doc.img || '';
         videoEl.onerror = () => {
-          console.warn('[DocPlayer Modal] Video stream gagal dimuat, beralih ke embed...');
-          if (iframeEl) {
-            videoEl.classList.add('hidden');
-            iframeEl.src = 'https://www.youtube.com/embed/t2tjfELFsSY?autoplay=1&rel=0&enablejsapi=1';
-            iframeEl.classList.remove('hidden');
-          }
+          console.warn('[DocPlayer Modal] Video stream gagal dimuat.');
         };
         videoEl.onloadedmetadata = () => {
           if (videoEl.videoWidth && videoEl.videoHeight) {
