@@ -1562,6 +1562,13 @@ document.getElementById('change-pass-form').addEventListener('submit', async (e)
 // ==========================================================
 // NAVIGATION & STATS
 // ==========================================================
+function toggleAdminMobileNav() {
+  const panel = document.getElementById('admin-mobile-nav-panel');
+  if (!panel) return;
+  panel.classList.toggle('hidden');
+}
+window.toggleAdminMobileNav = toggleAdminMobileNav;
+
 function switchView(view) {
   const views = ['dashboard', 'appearance', 'photos', 'articles', 'videos', 'tourism', 'stories', 'settings'];
   views.forEach(v => {
@@ -1570,6 +1577,12 @@ function switchView(view) {
     if (sec) sec.classList.toggle('hidden', v !== view);
     if (nav) nav.classList.toggle('active', v === view);
   });
+
+  // Otomatis sembunyikan drawer navigasi saat item menu ditekan di ponsel
+  if (window.innerWidth < 1024) {
+    const panel = document.getElementById('admin-mobile-nav-panel');
+    if (panel) panel.classList.add('hidden');
+  }
 
   const titles = {
     dashboard: 'Ringkasan & Statistik Konten',

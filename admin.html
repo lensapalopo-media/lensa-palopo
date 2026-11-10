@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Control Admin CMS — Lensa Palopo | Profil Kota Palopo</title>
+  <title>Admin Lensa Palopo</title>
   <link rel="icon" type="image/png" href="assets/logo-lensa-palopo.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -149,7 +149,7 @@
     <aside
       class="w-full lg:w-64 bg-navy-900 border-b lg:border-b-0 lg:border-r border-navy-800 shrink-0 flex flex-col justify-between">
       <div>
-        <!-- Brand Header -->
+        <!-- Brand Header with Mobile Hamburger -->
         <div class="p-4 border-b border-navy-800 flex items-center justify-between">
           <a href="index.html" class="flex items-center gap-3 group">
             <div
@@ -161,82 +161,91 @@
               <span class="text-[10px] text-gold font-semibold uppercase tracking-wider">Full Control CMS</span>
             </div>
           </a>
+          <!-- Mobile Toggle Button -->
+          <button id="admin-sidebar-toggle-btn" type="button" onclick="toggleAdminMobileNav()"
+            class="lg:hidden p-2 rounded-xl bg-navy-850 hover:bg-navy-800 text-slate-300 hover:text-white border border-navy-700 transition-colors"
+            title="Buka / Tutup Menu Admin">
+            <i data-lucide="menu" id="admin-mobile-icon" class="w-5 h-5"></i>
+          </button>
         </div>
 
-        <!-- Navigation Menu -->
-        <nav class="p-3 space-y-1 text-xs sm:text-sm">
-          <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Menu Utama</div>
-          <button onclick="switchView('dashboard')" id="nav-dashboard"
-            class="nav-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-            <span>Ringkasan & Status</span>
-          </button>
-          <button onclick="switchView('appearance')" id="nav-appearance"
-            class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <i data-lucide="palette" class="w-4 h-4 text-amber-400"></i>
-            <span>Tampilan, Hero & Profil</span>
-          </button>
+        <!-- Collapsible Mobile Navigation Wrapper -->
+        <div id="admin-mobile-nav-panel" class="hidden lg:block">
+          <!-- Navigation Menu -->
+          <nav class="p-3 space-y-1 text-xs sm:text-sm">
+            <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Menu Utama</div>
+            <button onclick="switchView('dashboard')" id="nav-dashboard"
+              class="nav-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+              <span>Ringkasan & Status</span>
+            </button>
+            <button onclick="switchView('appearance')" id="nav-appearance"
+              class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="palette" class="w-4 h-4 text-amber-400"></i>
+              <span>Tampilan, Hero & Profil</span>
+            </button>
 
-          <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Manajemen Konten
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Manajemen Konten
+            </div>
+            <button onclick="switchView('photos')" id="nav-photos"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="images" class="w-4 h-4 text-sky-400"></i><span>Galeri
+                  Foto</span></span>
+              <span id="badge-count-photos"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('articles')" id="nav-articles"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="newspaper"
+                  class="w-4 h-4 text-purple-400"></i><span>Berita & Cerita</span></span>
+              <span id="badge-count-articles"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('videos')" id="nav-videos"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="film" class="w-4 h-4 text-rose-400"></i><span>Video &
+                  Dokumenter</span></span>
+              <span id="badge-count-videos"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('tourism')" id="nav-tourism"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="compass"
+                  class="w-4 h-4 text-emerald-400"></i><span>Wisata & Kuliner</span></span>
+              <span id="badge-count-tourism"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+            <button onclick="switchView('stories')" id="nav-stories"
+              class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <span class="flex items-center gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-gold"></i><span>Sorotan
+                  Stories</span></span>
+              <span id="badge-count-stories"
+                class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
+            </button>
+
+            <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Cloud & Hosting
+            </div>
+            <button onclick="switchView('settings')" id="nav-settings"
+              class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
+              <i data-lucide="cloud" class="w-4 h-4 text-emerald-400"></i>
+              <span>Supabase & Vercel</span>
+            </button>
+          </nav>
+
+          <!-- Bottom Actions inside collapsible on mobile -->
+          <div class="p-3 border-t border-navy-800 space-y-2">
+            <a href="index.html" target="_blank"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 text-xs font-bold transition-colors">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Buka Dashboard Klien</span>
+            </a>
+            <button onclick="logoutAdmin()"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold transition-colors">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              <span>Keluar Sesi</span>
+            </button>
           </div>
-          <button onclick="switchView('photos')" id="nav-photos"
-            class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <span class="flex items-center gap-3"><i data-lucide="images" class="w-4 h-4 text-sky-400"></i><span>Galeri
-                Foto</span></span>
-            <span id="badge-count-photos"
-              class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
-          </button>
-          <button onclick="switchView('articles')" id="nav-articles"
-            class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <span class="flex items-center gap-3"><i data-lucide="newspaper"
-                class="w-4 h-4 text-purple-400"></i><span>Berita & Cerita</span></span>
-            <span id="badge-count-articles"
-              class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
-          </button>
-          <button onclick="switchView('videos')" id="nav-videos"
-            class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <span class="flex items-center gap-3"><i data-lucide="film" class="w-4 h-4 text-rose-400"></i><span>Video &
-                Dokumenter</span></span>
-            <span id="badge-count-videos"
-              class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
-          </button>
-          <button onclick="switchView('tourism')" id="nav-tourism"
-            class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <span class="flex items-center gap-3"><i data-lucide="compass"
-                class="w-4 h-4 text-emerald-400"></i><span>Wisata & Kuliner</span></span>
-            <span id="badge-count-tourism"
-              class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
-          </button>
-          <button onclick="switchView('stories')" id="nav-stories"
-            class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <span class="flex items-center gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-gold"></i><span>Sorotan
-                Stories</span></span>
-            <span id="badge-count-stories"
-              class="text-[10px] px-1.5 py-0.5 rounded bg-navy-950 text-slate-300 font-mono">0</span>
-          </button>
-
-          <div class="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Cloud & Hosting
-          </div>
-          <button onclick="switchView('settings')" id="nav-settings"
-            class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium transition-colors text-slate-300 hover:text-white hover:bg-navy-850">
-            <i data-lucide="cloud" class="w-4 h-4 text-emerald-400"></i>
-            <span>Supabase & Vercel</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- Bottom Actions -->
-      <div class="p-3 border-t border-navy-800 space-y-2">
-        <a href="index.html" target="_blank"
-          class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 text-xs font-bold transition-colors">
-          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          <span>Buka Dashboard Klien</span>
-        </a>
-        <button onclick="logoutAdmin()"
-          class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold transition-colors">
-          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-          <span>Keluar Sesi</span>
-        </button>
+        </div>
       </div>
     </aside>
 
@@ -797,7 +806,8 @@
               <h3 class="text-base font-bold text-white flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-5 h-5 text-gold"></i> Kelola Sorotan Stories Terkini (Folder & Album)
               </h3>
-              <p class="text-xs text-slate-400">Konsep Sorotan Instagram: Setiap lingkaran adalah folder album yang berisi beberapa foto atau video dan dapat dikelola isinya.</p>
+              <p class="text-xs text-slate-400">Konsep Sorotan Instagram: Setiap lingkaran adalah folder album yang
+                berisi beberapa foto atau video dan dapat dikelola isinya.</p>
             </div>
             <button onclick="openStoryEditorModal()"
               class="px-4 py-2.5 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold text-xs flex items-center gap-1.5 shadow">
@@ -1393,7 +1403,8 @@
           <button type="button" onclick="closeStoryEditorModal()"
             class="px-4 py-2 rounded-xl bg-navy-800 text-slate-300 font-semibold">Batal</button>
           <button type="submit" id="st-submit-btn"
-            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Simpan Sorotan</button>
+            class="px-5 py-2 rounded-xl bg-gold hover:bg-yellow-400 text-navy-950 font-extrabold">Simpan
+            Sorotan</button>
         </div>
       </form>
     </div>
@@ -1404,22 +1415,28 @@
   <!-- ======================================================== -->
   <div id="story-items-modal"
     class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-navy-900 border border-navy-700 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl my-6 flex flex-col max-h-[90vh]">
+    <div
+      class="bg-navy-900 border border-navy-700 rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl my-6 flex flex-col max-h-[90vh]">
       <!-- Header -->
       <div class="p-4 border-b border-navy-800 flex items-center justify-between bg-navy-950/60">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-gold via-amber-400 to-sky-400 shrink-0">
-            <img id="sim-cover-img" src="" alt="Cover" class="w-full h-full object-cover rounded-full border border-navy-950">
+            <img id="sim-cover-img" src="" alt="Cover"
+              class="w-full h-full object-cover rounded-full border border-navy-950">
           </div>
           <div>
             <div class="flex items-center gap-2">
               <h3 id="sim-title" class="text-base font-bold text-white">Kelola Isi Sorotan</h3>
-              <span id="sim-count-badge" class="px-2 py-0.5 rounded-full bg-gold/20 text-gold text-[10px] font-bold border border-gold/30">0 Media</span>
+              <span id="sim-count-badge"
+                class="px-2 py-0.5 rounded-full bg-gold/20 text-gold text-[10px] font-bold border border-gold/30">0
+                Media</span>
             </div>
-            <p class="text-[11px] text-slate-400">Tambah, ubah, atau hapus foto & video di dalam sorotan ini seperti di Instagram.</p>
+            <p class="text-[11px] text-slate-400">Tambah, ubah, atau hapus foto & video di dalam sorotan ini seperti di
+              Instagram.</p>
           </div>
         </div>
-        <button onclick="closeStoryItemsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-navy-800 transition-colors">
+        <button onclick="closeStoryItemsModal()"
+          class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-navy-800 transition-colors">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -1444,7 +1461,8 @@
         <div class="border-t border-navy-800 pt-5">
           <div class="bg-navy-950/70 border border-navy-800 rounded-xl p-4 space-y-3.5">
             <h4 class="text-xs font-bold text-white flex items-center gap-2">
-              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Tambah Foto atau Video Baru ke Sorotan Ini
+              <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Tambah Foto atau Video Baru ke Sorotan
+              Ini
             </h4>
 
             <form id="story-add-item-form" class="space-y-3 text-xs">
@@ -1454,14 +1472,18 @@
               <div>
                 <label class="block font-semibold text-slate-300 mb-1.5">Jenis Media *</label>
                 <div class="grid grid-cols-2 gap-2">
-                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-gold has-[:checked]:border-gold has-[:checked]:bg-gold/10">
-                    <input type="radio" name="sim-item-type" value="image" checked onchange="toggleSimMediaType('image')" class="text-gold focus:ring-gold">
+                  <label
+                    class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-gold has-[:checked]:border-gold has-[:checked]:bg-gold/10">
+                    <input type="radio" name="sim-item-type" value="image" checked
+                      onchange="toggleSimMediaType('image')" class="text-gold focus:ring-gold">
                     <span class="font-bold text-white flex items-center gap-1.5">
                       <i data-lucide="image" class="w-4 h-4 text-gold"></i> Foto (Gambar)
                     </span>
                   </label>
-                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-sky-400 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-400/10">
-                    <input type="radio" name="sim-item-type" value="video" onchange="toggleSimMediaType('video')" class="text-sky-400 focus:ring-sky-400">
+                  <label
+                    class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-900 border border-navy-700 cursor-pointer hover:border-sky-400 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-400/10">
+                    <input type="radio" name="sim-item-type" value="video" onchange="toggleSimMediaType('video')"
+                      class="text-sky-400 focus:ring-sky-400">
                     <span class="font-bold text-white flex items-center gap-1.5">
                       <i data-lucide="video" class="w-4 h-4 text-sky-400"></i> Video (MP4/URL)
                     </span>
@@ -1471,29 +1493,33 @@
 
               <!-- Upload File Perangkat -->
               <div class="space-y-1.5">
-                <label id="sim-upload-label" class="block font-semibold text-slate-300">Pilih File dari Perangkat *</label>
-                <input type="file" id="sim-file-input" accept="image/*"
-                  onchange="handleSimFilePreview(this)"
+                <label id="sim-upload-label" class="block font-semibold text-slate-300">Pilih File dari Perangkat
+                  *</label>
+                <input type="file" id="sim-file-input" accept="image/*" onchange="handleSimFilePreview(this)"
                   class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-slate-200 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:bg-gold file:text-navy-950 hover:file:bg-yellow-400 cursor-pointer">
               </div>
 
               <!-- Atau Input URL Langsung -->
               <div>
-                <label class="block font-semibold text-slate-400 mb-1">Atau Gunakan URL Media Langsung (Opsional)</label>
+                <label class="block font-semibold text-slate-400 mb-1">Atau Gunakan URL Media Langsung
+                  (Opsional)</label>
                 <input type="url" id="sim-url-input" placeholder="https://domain.com/media.jpg atau .mp4"
                   oninput="handleSimUrlInput(this.value)"
                   class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-white placeholder-slate-500">
               </div>
 
               <!-- Preview Box Media Baru -->
-              <div class="h-44 rounded-xl bg-navy-900 border border-navy-800 flex items-center justify-center overflow-hidden relative">
+              <div
+                class="h-44 rounded-xl bg-navy-900 border border-navy-800 flex items-center justify-center overflow-hidden relative">
                 <img id="sim-preview-img" class="hidden w-full h-full object-contain bg-black/40" alt="Preview Media">
-                <video id="sim-preview-video" class="hidden w-full h-full object-contain bg-black/40" controls playsinline></video>
+                <video id="sim-preview-video" class="hidden w-full h-full object-contain bg-black/40" controls
+                  playsinline></video>
                 <div id="sim-preview-placeholder" class="text-slate-500 text-center p-3">
                   <i data-lucide="eye" class="w-6 h-6 mx-auto mb-1 opacity-50"></i>
                   <span>Pratinjau foto atau video yang akan ditambahkan</span>
                 </div>
-                <div id="sim-upload-loading" class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
+                <div id="sim-upload-loading"
+                  class="hidden absolute inset-0 bg-navy-950/85 backdrop-blur-sm flex flex-col items-center justify-center gap-2 text-gold font-bold">
                   <div class="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
                   <span id="sim-upload-loading-text">Mengunggah media ke Supabase Storage...</span>
                 </div>
@@ -1502,7 +1528,8 @@
               <!-- Caption Slide -->
               <div>
                 <label class="block font-semibold text-slate-300 mb-1">Caption / Keterangan Slide</label>
-                <textarea id="sim-caption-input" rows="2" placeholder="Tuliskan keterangan cerita untuk foto/video ini..."
+                <textarea id="sim-caption-input" rows="2"
+                  placeholder="Tuliskan keterangan cerita untuk foto/video ini..."
                   class="w-full bg-navy-900 border border-navy-700 rounded-xl px-3 py-2 text-white placeholder-slate-500"></textarea>
               </div>
 
@@ -1520,7 +1547,8 @@
       <!-- Footer -->
       <div class="p-3 border-t border-navy-800 bg-navy-950/70 flex justify-between items-center text-xs">
         <span class="text-slate-400">Perubahan otomatis disimpan ke Supabase Cloud & Portal</span>
-        <button type="button" onclick="closeStoryItemsModal()" class="px-4 py-1.5 rounded-xl bg-navy-800 hover:bg-navy-700 text-white font-semibold">Tutup</button>
+        <button type="button" onclick="closeStoryItemsModal()"
+          class="px-4 py-1.5 rounded-xl bg-navy-800 hover:bg-navy-700 text-white font-semibold">Tutup</button>
       </div>
     </div>
   </div>
