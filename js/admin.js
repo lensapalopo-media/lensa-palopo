@@ -979,6 +979,9 @@ async function uploadVideoToSupabaseStorage(file, folder = 'videos-mp4', onProgr
     console.log('[Supabase Storage] Upload video berhasil! Public URL:', publicUrl);
     return publicUrl;
   } catch (videoErr) {
+    if (String(videoErr?.message || '').toLowerCase().includes('bucket not found')) {
+      throw new Error('Bucket "lensa-palopo-media" belum dibuat di Supabase Storage! Silakan buat bucket publik "lensa-palopo-media" di Dashboard Supabase agar video dapat tersimpan di cloud.');
+    }
     console.warn(`[Supabase Storage] Upload video (${sizeMb} MB) ke cloud ditolak/gagal (${videoErr?.message || videoErr}). Menyimpan ke IndexedDB lokal...`);
     const idbVideoKey = `idb-video://${uniqueFileName}`;
     const savedInIdb = await putToSharedIndexedDB(idbVideoKey, file);

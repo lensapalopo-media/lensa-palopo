@@ -320,7 +320,7 @@
         }
 
         if (videoRows.length > 0) {
-          const DEFAULT_DOC_URL = 'https://www.youtube.com/watch?v=t2tjfELFsSY';
+          const DEFAULT_DOC_URL = 'https://twmgcozbtptkesemxpth.supabase.co/storage/v1/object/public/lensa-palopo-media/videos-mp4/tebing-romantis.mp4';
           baseBundle.videos = videoRows.map((row, idx) => {
             const thumbUrl = (row.img || row.image_url || '').trim();
             const rawUrl = (row.video_url || row.videoUrl || '').trim();
@@ -630,7 +630,7 @@
 
     // 4. Sinkronisasi Video Dokumenter (`STATE.documentaries`, `window.documentariesData`, & Banner Utama `#feat-doc-*`)
     if (Array.isArray(bundle.videos)) {
-      const DEFAULT_DOC_URL = 'https://www.youtube.com/watch?v=t2tjfELFsSY';
+      const DEFAULT_DOC_URL = 'https://twmgcozbtptkesemxpth.supabase.co/storage/v1/object/public/lensa-palopo-media/videos-mp4/tebing-romantis.mp4';
       const normalizedVideos = bundle.videos.map((vid, idx) => {
         const thumbUrl = (vid.thumb || vid.img || '').trim();
         const rawVideoUrl = (vid.videoUrl || vid.video_url || '').trim();
